@@ -1,1101 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Aditya Singh | Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<style>
-  :root {
-    --bg: #050505;
-    --red: #E50914;
-    --red-glow: rgba(229, 9, 20, 0.4);
-    --gold: #C9A84C;
-    --white: #F0EDE8;
-    --dark: #111;
-  }
-  body, html {
-    margin: 0; padding: 0; background: var(--bg); color: var(--white);
-    font-family: 'Inter', sans-serif; overflow-x: hidden;
-  }
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--red); }
-  
-  canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-  
-  #boot-screen {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: #000; z-index: 9999; display: flex; flex-direction: column;
-    justify-content: center; align-items: center; cursor: pointer;
-  }
-  .boot-btn {
-    font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--red);
-    border: 1px solid var(--red); padding: 20px 40px; text-transform: uppercase;
-    letter-spacing: 4px; transition: 0.3s; background: transparent;
-  }
-  .boot-btn:hover { background: var(--red-glow); box-shadow: 0 0 20px var(--red); }
-  #boot-text {
-    margin-top: 40px; font-family: monospace; color: var(--red); font-size: 1.2rem;
-    text-align: left; width: 450px; line-height: 1.8;
-  }
-
-  nav {
-    position: fixed; top: 0; width: 100%; height: 70px;
-    background: rgba(5,0,0,0.85); backdrop-filter: blur(10px);
-    border-bottom: 2px solid var(--red); z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%; box-sizing: border-box; font-family: 'Orbitron', sans-serif;
-  }
-  .logo { font-size: 1.8rem; font-weight: 900; color: var(--white); }
-  .nav-links a {
-    color: var(--white); text-decoration: none; margin-left: 30px;
-    font-size: 0.9rem; letter-spacing: 1px; transition: 0.3s; opacity: 0.7;
-  }
-  .nav-links a:hover, .nav-links a.active { color: var(--red); opacity: 1; }
-
-  .sidebar {
-    position: fixed; left: 0; top: 70px; width: 80px; height: calc(100vh - 70px);
-    border-right: 1px solid rgba(255,0,0,0.2); z-index: 50;
-    display: flex; flex-direction: column; align-items: center; padding-top: 40px;
-  }
-  .sec-num { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: rgba(255,255,255,0.1); font-weight: 900; margin-bottom: 20px; writing-mode: vertical-rl; transform: rotate(180deg); }
-  .sec-name { font-family: 'Orbitron', sans-serif; color: var(--red); font-size: 0.8rem; letter-spacing: 3px; writing-mode: vertical-rl; transform: rotate(180deg); margin-bottom: 40px; }
-  .dots { display: flex; flex-direction: column; gap: 15px; margin-bottom: auto; }
-  .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 50%; transition: 0.3s; }
-  .dot.active { background: var(--red); box-shadow: 0 0 10px var(--red); animation: pulse 1.5s infinite; }
-  @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 5px var(--red); }
-    50% { transform: scale(1.5); box-shadow: 0 0 15px var(--red); }
-    100% { transform: scale(1); box-shadow: 0 0 5px var(--red); }
-  }
-  .socials { display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
-  .socials a { color: var(--white); text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; opacity: 0.5; transition: 0.3s; }
-  .socials a:hover { color: var(--red); opacity: 1; }
-
-  .main-content { margin-left: 80px; padding-top: 70px; padding-bottom: 40px; position: relative; z-index: 10; }
-  section { min-height: 100vh; padding: 100px 10%; display: flex; align-items: center; box-sizing: border-box; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  
-  h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; font-weight: 700; margin-top: 0; }
-  .text-red { color: var(--red); text-shadow: 0 0 10px var(--red-glow); }
-  
-  .card {
-    background: rgba(10,5,5,0.6); backdrop-filter: blur(8px);
-    border: 1px dashed var(--red); padding: 40px; pointer-events: auto;
-  }
-  
-  #home { justify-content: space-between; position: relative; }
-  .hero-card { max-width: 550px; margin-right: auto; }
-  .hero-card h3 { font-size: 1.5rem; color: var(--white); margin-bottom: 10px; }
-  .hero-card h1 { font-size: 4rem; margin-bottom: 10px; letter-spacing: 2px; }
-  .hero-card h2 { font-size: 1.2rem; color: #ccc; margin-bottom: 25px; font-family: 'Inter', sans-serif; font-weight: 400; }
-  .hero-card p { font-size: 1rem; line-height: 1.6; color: #aaa; margin-bottom: 30px; }
-  .badges { margin-bottom: 30px; font-family: 'Orbitron', sans-serif; color: var(--gold); }
-  .badges span { margin-right: 15px; }
-  .btn {
-    background: transparent; border: 1px solid var(--red); color: var(--red);
-    padding: 15px 30px; font-family: 'Orbitron', sans-serif; font-size: 1rem;
-    cursor: pointer; transition: 0.3s;
-  }
-  .btn:hover { background: var(--red); color: #fff; box-shadow: 0 0 15px var(--red); }
-  .sys-status {
-    border: 1px dashed var(--red); padding: 20px; font-family: 'Orbitron', sans-serif; 
-    align-self: center; margin-left: auto; pointer-events: auto;
-    background: rgba(10,0,0,0.5); backdrop-filter: blur(5px); text-align: center;
-  }
-  .stat-item { color: var(--gold); font-size: 1.2rem; margin-bottom: 5px; }
-  .stat-label { font-size: 0.8rem; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-  .stat-value { font-size: 1.5rem; font-weight: bold; }
-  
-  #about .card { width: 100%; max-width: 600px; margin-right: auto; }
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
-  .stat-box { border: 1px solid rgba(229,9,20,0.3); padding: 20px; text-align: center; }
-  .stat-box h3 { font-size: 2.5rem; color: var(--red); margin-bottom: 10px; display: inline-block; font-family: 'Orbitron', sans-serif; }
-  .stat-box span { font-size: 2.5rem; color: var(--red); font-family: 'Orbitron', sans-serif; font-weight: 700; }
-  .stat-box p { font-size: 0.9rem; color: #aaa; margin: 0; }
-
-  #skills .card { width: 100%; max-width: 500px; margin-right: auto; }
-  .skill { margin-bottom: 20px; }
-  .skill-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
-  .skill-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
-  .skill-bar-fill { height: 100%; background: var(--red); width: 0%; box-shadow: 0 0 10px var(--red); }
-
-  #projects .card { width: 100%; max-width: 800px; margin: 0 auto; }
-  .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-  .proj-item { border: 1px solid rgba(255,255,255,0.1); padding: 20px; transition: 0.3s; }
-  .proj-item:hover { border-color: var(--red); background: rgba(229,9,20,0.05); }
-  .proj-item h4 { color: var(--gold); margin-bottom: 10px; }
-  .proj-item p { font-size: 0.9rem; color: #aaa; line-height: 1.5; }
-
-  #experience .card { width: 100%; max-width: 700px; margin-right: auto; }
-  .timeline { border-left: 2px solid var(--red); padding-left: 30px; margin-top: 30px; }
-  .timeline-item { position: relative; margin-bottom: 40px; }
-  .timeline-item::before { content: ''; position: absolute; left: -36px; top: 0; width: 10px; height: 10px; background: var(--red); border-radius: 50%; box-shadow: 0 0 10px var(--red); }
-  .timeline-date { color: var(--red); font-family: 'Orbitron', sans-serif; font-size: 0.9rem; margin-bottom: 5px; }
-  .timeline-item h4 { margin-bottom: 15px; }
-  .timeline-item ul { margin: 0; padding-left: 20px; color: #aaa; font-size: 0.95rem; line-height: 1.6; }
-
-  #education .card { width: 100%; max-width: 900px; margin-right: auto; }
-  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; }
-  .edu-item { margin-bottom: 25px; }
-  .edu-item h4 { color: var(--gold); margin-bottom: 5px; }
-  .edu-item p { color: #aaa; font-size: 0.9rem; margin: 0; }
-  .achieve-list { margin: 0; padding-left: 20px; }
-  .achieve-list li { margin-bottom: 10px; color: #aaa; font-size: 0.95rem; }
-
-  #contact .card { width: 100%; max-width: 500px; margin-right: auto; }
-  .contact-info p { font-size: 1.1rem; margin-bottom: 15px; color: #ccc; }
-  .contact-info span { color: var(--red); font-family: 'Orbitron', sans-serif; margin-right: 10px; }
-
-  .bottom-bar {
-    position: fixed; bottom: 0; left: 0; width: 100%; height: 40px;
-    background: rgba(5,0,0,0.85); border-top: 1px solid rgba(229,9,20,0.3);
-    display: flex; justify-content: center; align-items: center;
-    font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: #888;
-    z-index: 100; letter-spacing: 2px; text-transform: uppercase;
-  }
-  .bottom-bar span { margin: 0 15px; color: var(--red); opacity: 0.8; }
-
-  @media (max-width: 1024px) {
-    .sidebar { display: none; }
-    .main-content { margin-left: 0; width: 100%; }
-    .card { margin-right: 0 !important; max-width: 100% !important; }
-    .sys-status { margin-left: 0; margin-top: 30px; align-self: flex-start; }
-    #home { flex-direction: column; align-items: flex-start; }
-    .stats-grid, .proj-grid, .edu-grid { grid-template-columns: 1fr; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Singh &middot; Futuristic 3D Finance Portfolio</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="particles-js"></div>
 
-<canvas id="robotCanvas"></canvas>
-
-<div id="boot-screen">
-  <button class="boot-btn">Click to Initialize System</button>
-  <div id="boot-text"></div>
-</div>
-
-<nav>
-  <div class="logo">AS</div>
-  <div class="nav-links">
-    <a href="#home" class="active">HOME</a>
-    <a href="#about">ABOUT</a>
-    <a href="#skills">SKILLS</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#experience">EXPERIENCE</a>
-    <a href="#contact">CONTACT</a>
-  </div>
-</nav>
-
-<aside class="sidebar">
-  <div class="sec-num">01</div>
-  <div class="sec-name">HOME</div>
-  <div class="dots">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
-  <div class="socials">
-    <a href="#">LI</a>
-    <a href="#">EM</a>
-    <a href="#">GH</a>
-  </div>
-</aside>
-
-<main class="main-content">
-  <section id="home">
-    <div class="card hero-card">
-      <h3>Hello, I'm</h3>
-      <h1>ADITYA <span class="text-red">SINGH</span></h1>
-      <h2>MBA Finance & Analytics | IIM Shillong</h2>
-      <p>I decode complex financial data into strategic insights that drive growth, informed decisions, and measurable results.</p>
-      <div class="badges">
-        <span>[NISM]</span> <span>[HSBC]</span> <span>[BHEL]</span> <span>[IIM]</span>
-      </div>
-      <button class="btn">EXPLORE MY WORK ↗</button>
+    <div class="boot-loader" id="boot-loader">
+        <div class="system-msg" id="boot-status">INITIALIZING BIOTECH INTERFACE...</div>
+        <div class="loading-bar">
+            <div class="loading-fill" id="boot-bar"></div>
+        </div>
+        <button id="init-button" class="btn-neon" style="opacity: 0; pointer-events: none;">ENGAGE SYSTEM</button>
     </div>
-    <div class="sys-status">
-      <div class="stat-item">[91.5%]</div>
-      <div class="stat-label">sys status</div>
-      <div class="stat-value text-red">ONLINE</div>
+
+    <header>
+        <div class="logo">ADITYA <span>SINGH</span></div>
+        <nav class="nav-links">
+            <a href="#home" class="active">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#skills">SKILLS</a>
+            <a href="#projects">PROJECTS</a>
+            <a href="#contact">CONTACT</a>
+        </nav>
+    </header>
+
+    <div id="webgl-container"></div>
+
+    <!-- HUD Overlay (Global) -->
+    <div class="hud-panel">
+        <div class="hud-item">
+            <div class="hud-label">NEURAL_LOAD</div>
+            <div class="hud-value">92%</div>
+        </div>
+        <div class="hud-item">
+            <div class="status-online">
+                <div class="status-dot"></div>
+                SYSTEM STATUS: ONLINE
+            </div>
+            <div class="hud-label" style="margin-top: 10px;">ANALYZING_DATA...</div>
+        </div>
     </div>
-  </section>
 
-  <section id="about">
-    <div class="card">
-      <h2>ABOUT <span class="text-red">ME</span></h2>
-      <p style="color:#aaa; line-height:1.6;">Leveraging a strong foundation in Economics and an MBA in Finance & Analytics from IIM Shillong, I specialize in transforming raw data into actionable financial strategies.</p>
-      <div class="stats-grid">
-        <div class="stat-box">
-          <h3 class="counter" data-target="30">0</h3><h3 style="color:#aaa;">+</h3>
-          <p>Financial Models Built</p>
-        </div>
-        <div class="stat-box">
-          <h3>₹<span class="counter" data-target="5000">0</span></h3><h3 style="color:#aaa;">Cr</h3>
-          <p>Portfolio Managed</p>
-        </div>
-        <div class="stat-box">
-          <h3 class="counter" data-target="20">0</h3><span>%</span>
-          <p>Forecast Accuracy Boost</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="skills">
-    <div class="card">
-      <h2>CORE <span class="text-red">SKILLS</span></h2>
-      
-      <div class="skill">
-        <div class="skill-header"><span>Financial Modeling & DCF</span><span><span class="counter" data-target="95">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>Data Analysis & Power BI</span><span><span class="counter" data-target="90">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>Valuation & LBO</span><span><span class="counter" data-target="88">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>SQL & Python</span><span><span class="counter" data-target="80">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>MS Excel (Advanced)</span><span><span class="counter" data-target="98">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="98%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>Risk & Monte Carlo</span><span><span class="counter" data-target="82">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>Pitch Decks & IB</span><span><span class="counter" data-target="87">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="87%"></div></div>
-      </div>
-      <div class="skill">
-        <div class="skill-header"><span>Econometrics & R</span><span><span class="counter" data-target="75">0</span>%</span></div>
-        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75%"></div></div>
-      </div>
-      
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="card">
-      <h2>KEY <span class="text-red">PROJECTS</span></h2>
-      <div class="proj-grid">
-        <div class="proj-item">
-          <h4>BHEL FP&A Portfolio Optimization</h4>
-          <p>Led financial planning and analysis for a massive ₹5,000+ Cr portfolio. Developed 30+ comprehensive financial models resulting in ₹15 Cr in identified cost savings and optimized overheads.</p>
-        </div>
-        <div class="proj-item">
-          <h4>Fincrux Power BI Dashboards</h4>
-          <p>Engineered 5 dynamic Power BI dashboards leveraging DAX and SQL. Integrated NLP chatbots to drive a 40–60% increase in user engagement and data interaction efficiency.</p>
-        </div>
-        <div class="proj-item">
-          <h4>The Venture Guys Deal Sourcing</h4>
-          <p>Spearheaded comprehensive market research to build a robust pool of 200–300 target companies. Facilitated and coordinated 10+ high-stakes investor pitch calls.</p>
-        </div>
-        <div class="proj-item">
-          <h4>Market Research Expansion Initiative</h4>
-          <p>Executed strategic market research generating ₹20L+ in new revenue. Achieved a 20% conversion rate increase while simultaneously reducing survey execution costs by 40%.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="experience">
-    <div class="card">
-      <h2>PROFESSIONAL <span class="text-red">EXPERIENCE</span></h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-date">May–Jul 2025</div>
-          <h4>Corporate Finance Intern | BHEL, New Delhi</h4>
-          <ul>
-            <li>Recognized as Best Intern among a competitive cohort of 20+ peers.</li>
-            <li>Led FP&A modeling and forecasting for a ₹5,000+ Cr portfolio.</li>
-            <li>Built 30+ sophisticated financial models, identifying ₹15 Cr in cost savings.</li>
-            <li>Achieved an 8% overhead reduction via the deployment of KPI dashboards.</li>
-          </ul>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">Feb–Apr 2025</div>
-          <h4>Project Intern | Fincrux Technologies LLP</h4>
-          <ul>
-            <li>Developed 5 advanced Power BI dashboards utilizing complex DAX and SQL.</li>
-            <li>Implemented NLP chatbots, yielding a 40–60% higher user engagement metric.</li>
-          </ul>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">Feb–Apr 2024</div>
-          <h4>IB Junior Analyst Intern | The Venture Guys</h4>
-          <ul>
-            <li>Managed the logistics and documentation for 10+ investor pitch calls.</li>
-            <li>Sourced a targeted pool of 200–300 companies for potential investment opportunities.</li>
-          </ul>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">Jul–Sep 2023</div>
-          <h4>Market Research Intern | Sort Surprises, Delhi NCR</h4>
-          <ul>
-            <li>Drove ₹20L+ in revenue, increasing overall conversion rates by 20%.</li>
-            <li>Secured 120+ new clients while reducing operational survey costs by 40%.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="education">
-    <div class="card">
-      <h2>ACADEMICS & <span class="text-red">ACHIEVEMENTS</span></h2>
-      <div class="edu-grid">
-        <div class="col">
-          <h3 style="color:var(--red); margin-bottom:20px;">EDUCATION</h3>
-          <div class="edu-item">
-            <h4>IIM Shillong</h4>
-            <p>MBA Finance & Analytics (2024–2026)</p>
-            <p style="color:var(--gold); margin-top:5px;">CGPA: 2.89/4.33</p>
-          </div>
-          <div class="edu-item">
-            <h4>Hansraj College DU</h4>
-            <p>BA Hons Economics (2020–2023)</p>
-            <p style="color:var(--gold); margin-top:5px;">Score: 78.38%</p>
-          </div>
-          <div class="edu-item">
-            <h4>GSBV No.1 Delhi</h4>
-            <p>CBSE XII (2020)</p>
-            <p style="color:var(--gold); margin-top:5px;">Score: 90% | Economics Topper</p>
-          </div>
-        </div>
-        <div class="col">
-          <h3 style="color:var(--red); margin-bottom:20px;">ACHIEVEMENTS</h3>
-          <ul class="achieve-list">
-            <li>HSBC CIB League 2025 — Campus Finalist</li>
-            <li>NISM Research Analyst — Scored 91.5%</li>
-            <li>CUET PG Economics — Scored 225/400</li>
-            <li>Produced & Released 2 Music Albums on Spotify & YouTube</li>
-            <li>Hosted 10+ webinars advocating for women's issues (200+ attendees)</li>
-            <li>Ekonniti OB: Policy Crucible 300+, Anveshan MUN 110+ delegates, secured ₹1L sponsorships</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="card">
-      <h2>INITIATE <span class="text-red">CONTACT</span></h2>
-      <div class="contact-info" style="margin-top:30px;">
-        <p><span>EMAIL</span> adityasingh.pgp24@iimshillong.ac.in</p>
-        <p><span>PHONE</span> +91 9625215353</p>
-        <p><span>LINKEDIN</span> linkedin.com/in/aditya-singh-214973270</p>
-        <p><span>LOCATION</span> Delhi / Shillong, India</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<div class="bottom-bar">
-  <span>Every Click</span> | <span>Follows You</span> | <span>Breathing</span> | <span>Context</span>
-</div>
-
-<script>
-// --- AUDIO CONTEXT ---
-const SoundEngine = {
-  ctx: null,
-  init() {
-    try {
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioContext();
-    } catch(e) { console.warn('Web Audio API not supported'); }
-  },
-  click() {
-    if(!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.connect(gain); gain.connect(this.ctx.destination);
-    osc.frequency.setValueAtTime(800, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.1);
-    gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
-    osc.start(); osc.stop(this.ctx.currentTime + 0.1);
-  },
-  glitch() {
-    if(!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sawtooth';
-    osc.connect(gain); gain.connect(this.ctx.destination);
-    osc.frequency.setValueAtTime(100, this.ctx.currentTime);
-    osc.frequency.linearRampToValueAtTime(500, this.ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
-    osc.start(); osc.stop(this.ctx.currentTime + 0.1);
-  },
-  scanComplete() {
-    if(!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-    osc.type = 'sine';
-    osc.connect(gain); gain.connect(this.ctx.destination);
-    osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
-    osc.frequency.linearRampToValueAtTime(1800, this.ctx.currentTime + 0.2);
-    gain.gain.setValueAtTime(0, this.ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.1, this.ctx.currentTime + 0.1);
-    gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.3);
-    osc.start(); osc.stop(this.ctx.currentTime + 0.3);
-  },
-  speak(text) {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance(text);
-      msg.pitch = 0.5; msg.rate = 1.1; msg.volume = 0.6;
-      window.speechSynthesis.speak(msg);
-    }
-  }
-};
-
-// --- BOOT SEQUENCE ---
-const bootScreen = document.getElementById('boot-screen');
-const bootText = document.getElementById('boot-text');
-const bootBtn = document.querySelector('.boot-btn');
-
-bootBtn.addEventListener('click', () => {
-  SoundEngine.init();
-  bootBtn.style.display = 'none';
-  bootText.innerHTML = '';
-  
-  const messages = [
-    "INITIALIZING SYSTEM...",
-    "LOADING ARMOR PROTOCOLS...",
-    "ESTABLISHING NEURAL LINK...",
-    "CALIBRATING VISOR OPTO-SENSORS...",
-    "SYSTEM ONLINE."
-  ];
-  
-  let i = 0;
-  function showNext() {
-    if (i < messages.length) {
-      bootText.innerHTML += "> " + messages[i] + "<br>";
-      SoundEngine.click();
-      i++;
-      setTimeout(showNext, 400);
-    } else {
-      setTimeout(() => {
-        gsap.to(bootScreen, {opacity: 0, duration: 1, onComplete: () => bootScreen.style.display = 'none'});
-        if(robotParts && robotParts.root) {
-          gsap.fromTo(robotParts.root.scale, {x:0, y:0, z:0}, {x:1, y:1, z:1, duration: 2, ease: "elastic.out(1, 0.75)"});
-        }
-        setTimeout(() => SoundEngine.speak("System Online. Ready for interaction."), 200);
-      }, 1000);
-    }
-  }
-  showNext();
-});
-
-// --- THREE.JS SETUP ---
-const canvas = document.getElementById('robotCanvas');
-const canvasWidth = window.innerWidth;
-const canvasHeight = window.innerHeight;
-
-const renderer = new THREE.WebGLRenderer({ 
-  canvas: canvas, 
-  antialias: true, 
-  alpha: true
-});
-renderer.setSize(canvasWidth, canvasHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.4;
-renderer.outputEncoding = THREE.sRGBEncoding;
-
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(35, canvasWidth/canvasHeight, 0.1, 100);
-camera.position.set(0, 1.2, 7.5);
-camera.lookAt(0, 1.8, 0);
-
-// ENVIRONMENT MAP
-const pmremGenerator = new THREE.PMREMGenerator(renderer);
-pmremGenerator.compileEquirectangularShader();
-const envScene = new THREE.Scene();
-const envLight = new THREE.HemisphereLight(0xFFE8A0, 0x1A0800, 1.0);
-envScene.add(envLight);
-const envTexture = pmremGenerator.fromScene(envScene).texture;
-scene.environment = envTexture;
-
-// MATERIALS
-const armorWhiteMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#F0EDE8'), roughness: 0.08, metalness: 0.15, envMapIntensity: 2.5
-});
-const armorWhiteDarkMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#D8D4CE'), roughness: 0.15, metalness: 0.1, envMapIntensity: 1.8
-});
-const goldMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#C9A84C'), roughness: 0.05, metalness: 0.98, envMapIntensity: 3.0
-});
-const goldBrightMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#FFD700'), roughness: 0.02, metalness: 1.0, envMapIntensity: 4.0,
-  emissive: new THREE.Color('#4A3800'), emissiveIntensity: 0.3
-});
-const goldDarkMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#8B6914'), roughness: 0.3, metalness: 0.8, envMapIntensity: 1.0
-});
-const visorGlowMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#FFD700'), emissive: new THREE.Color('#FFD700'), emissiveIntensity: 3.0,
-  roughness: 0.0, metalness: 0.0, transparent: true, opacity: 0.95
-});
-const emblemGlowMat = visorGlowMat.clone();
-const chromeMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#C8C8D0'), roughness: 0.05, metalness: 1.0, envMapIntensity: 5.0
-});
-const gapMat = new THREE.MeshStandardMaterial({
-  color: new THREE.Color('#0A0805'), roughness: 0.9, metalness: 0.0
-});
-
-// ROBOT PARTS STRUCTURE
-const robotParts = {
-  root: new THREE.Group(),
-  torso: new THREE.Group(),
-  head: new THREE.Group(),
-};
-scene.add(robotParts.root);
-robotParts.root.add(robotParts.torso, robotParts.head);
-robotParts.root.scale.set(0,0,0); // initial state for boot
-
-// HEAD
-const headGroup = robotParts.head;
-const helmetBase = new THREE.Mesh(new THREE.SphereGeometry(0.72, 32, 24, 0, Math.PI*2, 0, Math.PI*0.75), armorWhiteMat);
-helmetBase.scale.set(1, 1.08, 0.95);
-helmetBase.position.y = 0;
-
-function createEarFin(side) {
-  const geometry = new THREE.BufferGeometry();
-  const s = side;
-  const vertices = new Float32Array([
-    s*0.25, 0.65, -0.1,    s*0.55, 0.65, -0.1,    s*0.55, 0.65, 0.05,
-    s*0.25, 0.65, 0.05,    s*0.40, 1.35, -0.02
-  ]);
-  const indices = [0,1,4, 1,2,4, 2,3,4, 3,0,4, 0,3,2, 0,2,1];
-  geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-  geometry.setIndex(indices); geometry.computeVertexNormals();
-  return new THREE.Mesh(geometry, armorWhiteMat);
-}
-const leftEar = createEarFin(1);
-const rightEar = createEarFin(-1);
-
-const leftEarGold = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.72, 0.025), goldMat);
-leftEarGold.position.set(0.55, 1.0, -0.02);
-const rightEarGold = leftEarGold.clone(); rightEarGold.position.x = -0.55;
-
-const chinGuard = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.52, 0.62), armorWhiteMat);
-chinGuard.position.set(0, -0.48, 0.08);
-
-const jawPlateL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.28, 0.3), armorWhiteMat);
-jawPlateL.position.set(0.48, -0.42, 0.0);
-const jawPlateR = jawPlateL.clone(); jawPlateR.position.x = -0.48;
-
-const chinPoint = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.22, 4), armorWhiteMat);
-chinPoint.position.set(0, -0.72, 0.1); chinPoint.rotation.z = Math.PI;
-
-function createEyeSlit(side) {
-  const geo = new THREE.BoxGeometry(0.38, 0.1, 0.08);
-  const mesh = new THREE.Mesh(geo, visorGlowMat);
-  mesh.position.set(side * 0.22, -0.08, 0.55);
-  mesh.rotation.z = side * -0.18;
-  return mesh;
-}
-const leftEye = createEyeSlit(1);
-const rightEye = createEyeSlit(-1);
-
-const leftEyeSocket = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.14, 0.05), gapMat);
-leftEyeSocket.position.copy(leftEye.position); leftEyeSocket.position.z -= 0.02; leftEyeSocket.rotation.z = leftEye.rotation.z;
-const rightEyeSocket = leftEyeSocket.clone(); rightEyeSocket.position.x *= -1; rightEyeSocket.rotation.z *= -1;
-
-const insigniaCenter = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.28, 0.04), goldBrightMat);
-insigniaCenter.position.set(0, 0.22, 0.60);
-const insigniaLeft = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.04, 0.035), goldBrightMat);
-insigniaLeft.position.set(-0.08, 0.3, 0.59); insigniaLeft.rotation.z = 0.35;
-const insigniaRight = insigniaLeft.clone(); insigniaRight.position.x *= -1; insigniaRight.rotation.z *= -1;
-
-const helmetRim = new THREE.Mesh(new THREE.TorusGeometry(0.70, 0.018, 8, 48, Math.PI), goldMat);
-helmetRim.position.set(0, -0.22, 0); helmetRim.rotation.x = -0.3;
-
-const cheekLineL = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.42, 0.022), goldMat);
-cheekLineL.position.set(0.42, -0.28, 0.42); cheekLineL.rotation.z = 0.15;
-const cheekLineR = cheekLineL.clone(); cheekLineR.position.x *= -1; cheekLineR.rotation.z *= -1;
-
-const neckCollar = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.50, 0.32, 16), armorWhiteMat);
-neckCollar.position.set(0, -0.92, 0);
-const neckBandTop = new THREE.Mesh(new THREE.TorusGeometry(0.44, 0.022, 8, 32), goldMat);
-neckBandTop.position.set(0, -0.78, 0); neckBandTop.rotation.x = Math.PI/2;
-const neckBandBot = neckBandTop.clone(); neckBandBot.position.y = -1.06;
-
-headGroup.add(helmetBase, leftEar, rightEar, leftEarGold, rightEarGold, chinGuard, jawPlateL, jawPlateR, chinPoint,
-              leftEyeSocket, rightEyeSocket, leftEye, rightEye, insigniaCenter, insigniaLeft, insigniaRight,
-              helmetRim, cheekLineL, cheekLineR, neckCollar, neckBandTop, neckBandBot);
-headGroup.position.set(0, 3.92, 0);
-
-// TORSO
-const torsoGroup = robotParts.torso;
-const chestCore = new THREE.Mesh(new THREE.BoxGeometry(2.4, 2.2, 1.1), armorWhiteMat);
-chestCore.position.set(0, 0.2, 0);
-const chestRidge = new THREE.Mesh(new THREE.BoxGeometry(0.22, 1.8, 0.18), armorWhiteDarkMat);
-chestRidge.position.set(0, 0.3, 0.52);
-
-const pecPlateL = new THREE.Mesh(new THREE.SphereGeometry(0.72, 16, 12, 0.1, Math.PI*0.85, 0.15, Math.PI*0.55), armorWhiteMat);
-pecPlateL.position.set(0.58, 0.52, 0.38); pecPlateL.scale.set(1, 0.72, 0.48); pecPlateL.rotation.y = 0.35;
-const pecPlateR = pecPlateL.clone(); pecPlateR.position.x = -0.58; pecPlateR.rotation.y = -0.35; pecPlateR.scale.x = 1;
-
-const emblemBase = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.38, 0.06, 32), goldMat);
-emblemBase.rotation.x = Math.PI/2; emblemBase.position.set(0, 0.48, 0.58);
-const emblemGlow = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.04, 32), emblemGlowMat);
-emblemGlow.rotation.x = Math.PI/2; emblemGlow.position.set(0, 0.48, 0.62);
-const emblemRing = new THREE.Mesh(new THREE.TorusGeometry(0.38, 0.028, 8, 32), goldBrightMat);
-emblemRing.rotation.x = Math.PI/2; emblemRing.position.set(0, 0.48, 0.60);
-
-function createChestLine(angle, length) {
-  const line = new THREE.Mesh(new THREE.BoxGeometry(0.028, length, 0.03), goldMat);
-  line.position.set(Math.sin(angle)*(0.28+length/2), 0.48+Math.cos(angle)*(0.28+length/2), 0.60);
-  line.rotation.z = angle; return line;
-}
-const chestLines = [
-  createChestLine(0, 0.38), createChestLine(Math.PI, 0.38), createChestLine(Math.PI/2, 0.32), createChestLine(-Math.PI/2, 0.32),
-  createChestLine(Math.PI/4, 0.24), createChestLine(-Math.PI/4, 0.24), createChestLine(3*Math.PI/4, 0.24), createChestLine(-3*Math.PI/4, 0.24)
-];
-chestLines.forEach(l => torsoGroup.add(l));
-
-for (let i = 0; i < 4; i++) {
-  const abPlate = new THREE.Mesh(new THREE.BoxGeometry(1.6-i*0.08, 0.26, 0.88-i*0.04), armorWhiteMat);
-  abPlate.position.set(0, -0.58-i*0.30, 0.04-i*0.01);
-  const abBorder = new THREE.Mesh(new THREE.BoxGeometry(1.65-i*0.08, 0.028, 0.028), goldDarkMat);
-  abBorder.position.set(0, -0.45-i*0.30, 0.48);
-  torsoGroup.add(abPlate, abBorder);
-}
-for (let i = 0; i < 6; i++) {
-  const vert = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.18, 0.22), goldDarkMat);
-  vert.position.set(0, 0.8-i*0.35, -0.52); torsoGroup.add(vert);
-}
-
-const gorgetL = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.44, 0.22, 12), armorWhiteDarkMat);
-gorgetL.position.set(1.28, 1.22, 0);
-const gorgetR = gorgetL.clone(); gorgetR.position.x = -1.28;
-[gorgetL.position, gorgetR.position].forEach(pos => {
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(0.50, 0.022, 8, 24), goldMat);
-  ring.rotation.x = Math.PI/2; ring.position.copy(pos); ring.position.y += 0.11;
-  torsoGroup.add(ring);
-});
-
-torsoGroup.add(chestCore, chestRidge, pecPlateL, pecPlateR, emblemBase, emblemGlow, emblemRing, gorgetL, gorgetR);
-torsoGroup.position.set(0, 2.0, 0);
-
-// PAULDRONS
-function createPauldron(side) {
-  const group = new THREE.Group();
-  const baseDome = new THREE.Mesh(new THREE.SphereGeometry(0.72, 20, 14, 0, Math.PI*2, 0, Math.PI*0.58), armorWhiteMat);
-  baseDome.scale.set(1, 0.82, 0.88); group.add(baseDome);
-  for (let p = 0; p < 3; p++) {
-    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.88-p*0.06, 0.22, 0.72-p*0.04), p===0?armorWhiteMat:armorWhiteDarkMat);
-    plate.position.set(side*p*0.04, -0.42-p*0.20, 0.04); plate.rotation.x = -0.1*p;
-    const trim = new THREE.Mesh(new THREE.BoxGeometry(0.90-p*0.06, 0.025, 0.025), goldMat);
-    trim.position.set(side*p*0.04, -0.53-p*0.20, 0.36-p*0.02);
-    group.add(plate, trim);
-  }
-  const ornamentV = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.32, 0.04), goldBrightMat);
-  ornamentV.position.set(0, 0.18, 0.58);
-  const ornamentH = ornamentV.clone(); ornamentH.rotation.z = Math.PI/2; ornamentH.scale.y = 0.7; ornamentH.position.set(0, 0.22, 0.58);
-  const domeTrim = new THREE.Mesh(new THREE.TorusGeometry(0.70, 0.02, 8, 32, Math.PI*1.1), goldMat);
-  domeTrim.rotation.x = Math.PI/2; domeTrim.position.y = 0.02;
-  group.add(ornamentV, ornamentH, domeTrim);
-  group.position.set(side*1.72, 3.72-2.0, 0.0); // rel to torso
-  return group;
-}
-robotParts.shoulderL = createPauldron(1);
-robotParts.shoulderR = createPauldron(-1);
-torsoGroup.add(robotParts.shoulderL, robotParts.shoulderR);
-
-// ARMS
-function createArm(side) {
-  const armGroup = new THREE.Group();
-  armGroup.position.set(side * 1.82, 3.18, 0); // Shoulder Pivot
-  
-  const upperArmGroup = new THREE.Group();
-  const upperArmBody = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.28, 1.35, 12), armorWhiteMat);
-  const upperOuterPlate = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1.0, 0.18), armorWhiteDarkMat);
-  upperOuterPlate.position.set(side * 0.22, 0, 0.08);
-  const upperStripe = new THREE.Mesh(new THREE.BoxGeometry(0.032, 1.05, 0.032), goldMat);
-  upperStripe.position.set(side * 0.35, 0, 0.14);
-  const topBand = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.34, 0.04, 12), goldMat); topBand.position.y = 0.65;
-  const botBand = topBand.clone(); botBand.position.y = -0.65;
-  upperArmGroup.add(upperArmBody, upperOuterPlate, upperStripe, topBand, botBand);
-  upperArmGroup.position.set(0,-0.675,0); // shift pivot to top
-
-  const elbowPivot = new THREE.Group();
-  elbowPivot.position.set(0, -0.76, 0); // 2.42 - 3.18
-  
-  const elbowJoint = new THREE.Mesh(new THREE.SphereGeometry(0.30, 12, 10), chromeMat);
-  const elbowCap = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.38, 8), armorWhiteMat);
-  elbowCap.position.z = -0.3; elbowCap.rotation.x = Math.PI/2;
-  const elbowRing = new THREE.Mesh(new THREE.TorusGeometry(0.30, 0.025, 8, 24), goldMat);
-  elbowRing.rotation.x = Math.PI/2;
-  elbowPivot.add(elbowJoint, elbowCap, elbowRing);
-
-  const forearmPivot = new THREE.Group();
-  forearmPivot.position.set(0, -0.70, 0); // 1.72 - 2.42
-  elbowPivot.add(forearmPivot);
-
-  const forearmGroup = new THREE.Group();
-  const forearmBody = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.22, 1.2, 12), armorWhiteMat);
-  const forearmPlate = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.98, 0.16), armorWhiteDarkMat);
-  forearmPlate.position.set(side * 0.18, 0, 0.1);
-  const wristFlare = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.38, 0.22, 12), armorWhiteMat);
-  wristFlare.position.y = -0.62;
-  const wristBand = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.05, 12), goldMat);
-  wristBand.position.y = -0.55;
-  forearmGroup.add(forearmBody, forearmPlate, wristFlare, wristBand);
-  for (let fl = 0; fl < 3; fl++) {
-    const fLine = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.85, 0.02), goldDarkMat);
-    fLine.position.set(side * (0.06 - fl*0.06), 0, 0.22);
-    forearmGroup.add(fLine);
-  }
-  forearmPivot.add(forearmGroup);
-
-  const handPivot = new THREE.Group();
-  handPivot.position.set(0, -0.70, 0); // 1.02 - 1.72
-  forearmPivot.add(handPivot);
-
-  const handGroup = new THREE.Group();
-  const palmBack = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.52, 0.18), armorWhiteMat);
-  const palmBorder = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.56, 0.04), goldMat);
-  palmBorder.position.z = 0.08;
-  for (let f = 0; f < 4; f++) {
-    const fingerGroup = new THREE.Group();
-    const xOff = (f - 1.5) * 0.14;
-    for (let k = 0; k < 3; k++) {
-      const knuckle = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.20-k*0.02, 0.10), k===0?armorWhiteMat:armorWhiteDarkMat);
-      knuckle.position.y = -0.32 - k*0.21;
-      const kLine = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.018, 0.12), goldMat);
-      kLine.position.y = -0.22 - k*0.21;
-      fingerGroup.add(knuckle, kLine);
-    }
-    fingerGroup.position.x = xOff; handGroup.add(fingerGroup);
-  }
-  const thumbGroup = new THREE.Group();
-  for (let k = 0; k < 2; k++) {
-    const thKnuckle = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.18, 0.10), armorWhiteMat);
-    thKnuckle.position.y = -k*0.19; thumbGroup.add(thKnuckle);
-  }
-  thumbGroup.position.set(side * 0.34, -0.2, 0.02); thumbGroup.rotation.z = side * 0.5;
-  handGroup.add(thumbGroup, palmBack, palmBorder);
-  handPivot.add(handGroup);
-
-  armGroup.add(upperArmGroup, elbowPivot);
-  armGroup.forearm = forearmPivot;
-  armGroup.hand = handPivot;
-
-  return armGroup;
-}
-robotParts.leftArm = createArm(1);
-robotParts.rightArm = createArm(-1);
-robotParts.root.add(robotParts.leftArm, robotParts.rightArm);
-
-// LEGS
-function createLeg(side) {
-  const legGroup = new THREE.Group();
-  legGroup.position.set(side * 0.7, 0.18, 0); // Hip Pivot
-
-  const hipPlate = new THREE.Mesh(new THREE.BoxGeometry(0.88, 0.32, 0.78), armorWhiteMat);
-  const hipTrim = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.028, 0.028), goldMat);
-  hipTrim.position.set(0, -0.16, 0.38);
-  legGroup.add(hipPlate, hipTrim);
-
-  const thighGroup = new THREE.Group();
-  thighGroup.position.set(0, -1.13, 0); // -0.95 - 0.18
-  const thighBody = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.36, 1.55, 12), armorWhiteMat);
-  const thighFrontPlate = new THREE.Mesh(new THREE.BoxGeometry(0.62, 1.1, 0.22), armorWhiteDarkMat);
-  thighFrontPlate.position.z = 0.28;
-  const thighStripe = new THREE.Mesh(new THREE.BoxGeometry(0.03, 1.1, 0.03), goldMat);
-  thighStripe.position.z = 0.40;
-  const thighBandTop = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.44, 0.04, 12), goldMat); thighBandTop.position.y = 0.75;
-  const thighBandBot = thighBandTop.clone(); thighBandBot.position.y = -0.75;
-  thighGroup.add(thighBody, thighFrontPlate, thighStripe, thighBandTop, thighBandBot);
-  legGroup.add(thighGroup);
-
-  const kneeCap = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 10, 0, Math.PI*2, 0, Math.PI*0.55), armorWhiteMat);
-  kneeCap.position.set(0, -2.10, 0.18); kneeCap.scale.set(1, 0.68, 0.72);
-  const kneeOrnament = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.22, 0.05), goldBrightMat);
-  kneeOrnament.position.set(0, -2.06, 0.40);
-  legGroup.add(kneeCap, kneeOrnament);
-
-  const shinGroup = new THREE.Group();
-  shinGroup.position.set(0, -2.83, 0);
-  const shinBody = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.26, 1.3, 12), armorWhiteMat);
-  const shinPlate = new THREE.Mesh(new THREE.BoxGeometry(0.52, 1.0, 0.2), armorWhiteDarkMat);
-  shinPlate.position.z = 0.22;
-  const shinGoldLine = new THREE.Mesh(new THREE.BoxGeometry(0.025, 1.0, 0.025), goldMat);
-  shinGoldLine.position.z = 0.33;
-  shinGroup.add(shinBody, shinPlate, shinGoldLine);
-  legGroup.add(shinGroup);
-
-  const fadeOverlay = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 1.5), new THREE.MeshBasicMaterial({color: 0x050505, transparent: true, opacity: 0.95, depthWrite: false}));
-  fadeOverlay.position.set(0, -3.28, 0.55);
-  legGroup.add(fadeOverlay);
-
-  return legGroup;
-}
-robotParts.leftLeg = createLeg(1);
-robotParts.rightLeg = createLeg(-1);
-robotParts.root.add(robotParts.leftLeg, robotParts.rightLeg);
-
-// CAPE
-const capeGeo = new THREE.PlaneGeometry(3.2, 4.5, 8, 16);
-const capePositions = capeGeo.attributes.position;
-for (let i = 0; i < capePositions.count; i++) {
-  const x = capePositions.getX(i); const y = capePositions.getY(i);
-  const billowZ = -Math.pow(Math.abs(y - 2.25) / 4.5, 0.5) * 0.8;
-  const edgeBillow = Math.pow(Math.abs(x) / 1.6, 1.5) * -0.4;
-  capePositions.setZ(i, billowZ + edgeBillow);
-}
-capeGeo.computeVertexNormals();
-const capeMat = new THREE.MeshStandardMaterial({ color: new THREE.Color('#0A0805'), roughness: 0.9, metalness: 0.0, side: THREE.DoubleSide });
-const cape = new THREE.Mesh(capeGeo, capeMat);
-cape.position.set(0, 2.0, -0.72);
-robotParts.root.add(cape);
-
-// LIGHTING
-const keyLight = new THREE.SpotLight(0xFFE4A0, 12);
-keyLight.position.set(3.5, 7, 4); keyLight.target.position.set(0, 2, 0); keyLight.angle = 0.45; keyLight.penumbra = 0.6; keyLight.castShadow = true;
-scene.add(keyLight, keyLight.target);
-
-const fillLight = new THREE.PointLight(0xA0C4FF, 4, 18);
-fillLight.position.set(-4.5, 3, 3); scene.add(fillLight);
-
-const rimLight = new THREE.SpotLight(0xFFFFFF, 8);
-rimLight.position.set(0, 5, -6); rimLight.target.position.set(0, 2, 0); rimLight.angle = 0.5; rimLight.penumbra = 0.8;
-scene.add(rimLight, rimLight.target);
-
-const floorBounce = new THREE.PointLight(0xFFB040, 3, 10);
-floorBounce.position.set(0, -2, 3); scene.add(floorBounce);
-
-const ambient = new THREE.AmbientLight(0x1A1830, 0.8); scene.add(ambient);
-
-const eyeGlowLight = new THREE.PointLight(0xFFD700, 2, 2);
-eyeGlowLight.position.set(0, 3.88, 0.85); scene.add(eyeGlowLight);
-
-// PARTICLE SYSTEM
-const particleSystem = {
-  particles: [],
-  group: new THREE.Group(),
-  burst(type, count, pos) {
-    for(let i=0; i<count; i++) {
-      const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.04), new THREE.MeshBasicMaterial({color: 0xffd700, transparent:true}));
-      mesh.position.copy(pos);
-      mesh.velocity = new THREE.Vector3((Math.random()-0.5)*0.15, (Math.random()-0.5)*0.15, (Math.random()-0.5)*0.15);
-      mesh.life = 1.0;
-      this.group.add(mesh); this.particles.push(mesh);
-    }
-  },
-  update(delta) {
-    for(let i=this.particles.length-1; i>=0; i--) {
-      const p = this.particles[i]; p.position.add(p.velocity); p.life -= delta * 2;
-      p.scale.setScalar(p.life); p.material.opacity = p.life;
-      if(p.life <= 0) { this.group.remove(p); this.particles.splice(i, 1); }
-    }
-  }
-};
-scene.add(particleSystem.group);
-
-// ROBOT BRAIN
-class RobotBrain {
-  constructor(parts) {
-    this.parts = parts; this.state = 'IDLE';
-    this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-    this.time = 0; this.lastInteraction = Date.now();
-    this.currentSection = 'home'; this.blinkTimer = this.randomBetween(3, 7);
-  }
-  update(delta) {
-    this.time += delta; const t = this.time;
-    const breathe = Math.sin(t * 0.9) * 0.009;
-    this.parts.torso.scale.y = 1 + breathe; this.parts.torso.scale.x = 1 - breathe * 0.3;
-    this.parts.root.position.y = Math.sin(t * 0.45) * 0.18;
-    this.parts.root.position.z = Math.sin(t * 0.28) * 0.06;
-
-    const visorIntensity = 2.0 + Math.sin(t * 2.2) * 1.8;
-    visorGlowMat.emissiveIntensity = visorIntensity;
-    eyeGlowLight.intensity = visorIntensity * 0.7;
-    emblemGlowMat.emissiveIntensity = visorIntensity * 0.8;
-
-    this.blinkTimer -= delta;
-    if (this.blinkTimer <= 0) { this.triggerBlink(); this.blinkTimer = this.randomBetween(3.5, 8); }
-
-    this.mouse.x += (this.mouse.targetX - this.mouse.x) * 0.038;
-    this.mouse.y += (this.mouse.targetY - this.mouse.y) * 0.038;
-    
-    this.parts.head.rotation.y = this.mouse.x * 0.44; this.parts.head.rotation.x = this.mouse.y * 0.28;
-    this.parts.torso.rotation.y = this.mouse.x * 0.18;
-    this.parts.leftArm.rotation.y = this.mouse.x * 0.08; this.parts.rightArm.rotation.y = this.mouse.x * 0.08;
-
-    this.parts.shoulderL.rotation.z = Math.sin(t * 0.9) * 0.025 + 0.05;
-    this.parts.shoulderR.rotation.z = -Math.sin(t * 0.9) * 0.025 - 0.05;
-
-    keyLight.position.x = 3.5 + this.mouse.x * 1.5; keyLight.position.y = 7 + this.mouse.y * 1.0;
-
-    if (Math.random() < 0.003) {
-      gsap.to(this.parts.root.position, { x: (Math.random()-0.5)*0.035, duration: 0.18, ease: "power1.inOut", yoyo: true, repeat: 1 });
-    }
-  }
-  triggerBlink() {
-    const isDouble = Math.random() < 0.25;
-    const tl = gsap.timeline();
-    tl.to(visorGlowMat, { emissiveIntensity: 0.1, duration: 0.06 }).to(visorGlowMat, { emissiveIntensity: 3.0, duration: 0.09 });
-    if (isDouble) {
-      tl.to(visorGlowMat, { emissiveIntensity: 0.1, duration: 0.06, delay: 0.08 }).to(visorGlowMat, { emissiveIntensity: 3.0, duration: 0.09 });
-      SoundEngine.glitch();
-    }
-  }
-  setPose(section) {
-    const poses = {
-      home: { torsoRotY: 0, headRotY: 0, leftArmRotZ: 0.12, rightArmRotZ: -0.12, leftForearmRotX: 0, rightForearmRotX: 0 },
-      about: { torsoRotY: 0.08, headRotY: 0.12, headRotZ: 0.06, leftArmRotZ: 0.55, rightArmRotZ: -0.55, leftForearmRotX: 1.3, rightForearmRotX: 1.3 },
-      skills: { torsoRotY: -0.08, rightArmRotZ: -0.65, rightArmRotX: -0.3, rightForearmRotX: 0.4, leftArmRotZ: 0.2, leftHandRotZ: 0.3 },
-      projects: { torsoRotX: 0.12, leftArmRotX: -0.35, rightArmRotX: -0.35, leftForearmRotX: 0.7, rightForearmRotX: 0.7 },
-      experience: { leftArmRotZ: -0.55, rightArmRotZ: 0.55, leftForearmRotX: -1.2, rightForearmRotX: -1.2 },
-      education: { torsoRotX: -0.06, leftArmRotZ: 0.15, rightArmRotZ: -0.15 },
-      contact: { rightArmRotZ: -0.35, rightArmRotX: -0.25, rightForearmRotX: 0.55, rightHandRotZ: -0.2, torsoRotY: -0.12 }
-    };
-    const pose = poses[section] || poses.home; const dur = 0.85; const ease = "elastic.out(1, 0.75)";
-    gsap.to(this.parts.torso.rotation, { y: pose.torsoRotY || 0, x: pose.torsoRotX || 0, duration: dur, ease });
-    gsap.to(this.parts.head.rotation, { y: pose.headRotY || 0, z: pose.headRotZ || 0, duration: dur, ease });
-    gsap.to(this.parts.leftArm.rotation, { z: pose.leftArmRotZ || 0.12, x: pose.leftArmRotX || 0, duration: dur, ease });
-    gsap.to(this.parts.rightArm.rotation, { z: pose.rightArmRotZ || -0.12, x: pose.rightArmRotX || 0, duration: dur, ease });
-    if(this.parts.leftArm.forearm) {
-      gsap.to(this.parts.leftArm.forearm.rotation, { x: pose.leftForearmRotX || 0, duration: dur, ease });
-      gsap.to(this.parts.rightArm.forearm.rotation, { x: pose.rightForearmRotX || 0, duration: dur, ease });
-    }
-    if(this.parts.leftArm.hand) {
-      gsap.to(this.parts.leftArm.hand.rotation, { z: pose.leftHandRotZ || 0, duration: dur, ease });
-      gsap.to(this.parts.rightArm.hand.rotation, { z: pose.rightHandRotZ || 0, duration: dur, ease });
-    }
-  }
-  onMouseMove(normX, normY) {
-    this.mouse.targetX = normX; this.mouse.targetY = normY; this.lastInteraction = Date.now();
-    if (this.state === 'BORED') this.wakeUp();
-  }
-  onClick(x, y) {
-    SoundEngine.click();
-    gsap.to(visorGlowMat, { emissiveIntensity: 8, duration: 0.08, yoyo: true, repeat: 1, onComplete: () => visorGlowMat.emissiveIntensity = 3.0 });
-    gsap.to(this.parts.rightArm.rotation, { z: -0.8, duration: 0.18, ease: "power3.out", onComplete: () => gsap.to(this.parts.rightArm.rotation, { z: -0.12, duration: 0.55, ease: "elastic.out" }) });
-    particleSystem.burst('IMPACT', 20, new THREE.Vector3(0, 2.48, 0.62));
-    const reactions = ["Acknowledged.", "Processing.", "Confirmed.", "Executing.", "Understood."];
-    SoundEngine.speak(reactions[Math.floor(Math.random() * reactions.length)]);
-    this.lastInteraction = Date.now();
-  }
-  checkInactivity() {
-    const idle = (Date.now() - this.lastInteraction) / 1000;
-    if (idle > 10 && this.state !== 'BORED') {
-      this.state = 'BORED';
-      gsap.to(this.parts.head.rotation, { y: 0.55, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      visorGlowMat.emissiveIntensity = 1.2;
-    }
-    if (idle > 30 && this.state === 'BORED') { SoundEngine.speak("Still analyzing?"); this.lastInteraction = Date.now(); }
-  }
-  wakeUp() {
-    this.state = 'IDLE'; gsap.killTweensOf(this.parts.head.rotation);
-    SoundEngine.scanComplete(); visorGlowMat.emissiveIntensity = 3.5;
-  }
-  randomBetween(a, b) { return a + Math.random() * (b - a); }
-}
-
-const robot = new RobotBrain(robotParts);
-const clock = new THREE.Clock();
-
-function animate() {
-  requestAnimationFrame(animate);
-  const delta = clock.getDelta();
-  robot.update(delta);
-  robot.checkInactivity();
-  particleSystem.update(delta);
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('mousemove', (e) => {
-  const nx = (e.clientX / window.innerWidth) * 2 - 1;
-  const ny = -(e.clientY / window.innerHeight) * 2 + 1;
-  robot.onMouseMove(nx, ny);
-});
-
-window.addEventListener('click', (e) => {
-  if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON' && !e.target.closest('#boot-screen')) {
-    if (robot.state !== 'BORED') robot.onClick(e.clientX, e.clientY);
-  }
-});
-
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// --- SCROLL ANIMATIONS ---
-gsap.registerPlugin(ScrollTrigger);
-
-const navLinks = document.querySelectorAll('.nav-links a');
-const dots = document.querySelectorAll('.dot');
-const secNum = document.querySelector('.sec-num');
-const secName = document.querySelector('.sec-name');
-const sections = document.querySelectorAll('section');
-
-function updateNav(index, id) {
-  navLinks.forEach(l => l.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-  if(navLinks[index]) navLinks[index].classList.add('active');
-  if(dots[index]) dots[index].classList.add('active');
-  secNum.textContent = "0" + (index + 1);
-  secName.textContent = id.toUpperCase();
-  robot.setPose(id);
-}
-
-sections.forEach((sec, index) => {
-  ScrollTrigger.create({
-    trigger: sec, start: "top 75%", toggleActions: "play none none reverse",
-    onEnter: () => updateNav(index, sec.id),
-    onEnterBack: () => updateNav(index, sec.id)
-  });
-  
-  const bars = sec.querySelectorAll('.skill-bar-fill');
-  const counters = sec.querySelectorAll('.counter');
-  
-  if (bars.length || counters.length) {
-    ScrollTrigger.create({
-      trigger: sec, start: "top 75%",
-      onEnter: () => {
-        bars.forEach(bar => {
-          gsap.fromTo(bar, {width: '0%'}, {width: bar.getAttribute('data-width'), duration: 1.5, ease: "power2.out"});
-        });
-        counters.forEach(cnt => {
-          const target = parseFloat(cnt.getAttribute('data-target'));
-          const obj = { val: 0 };
-          gsap.to(obj, {
-            val: target, duration: 2, ease: "power2.out",
-            onUpdate: () => cnt.textContent = Math.round(obj.val)
-          });
-        });
-      }
-    });
-  }
-});
-
-</script>
+    <main>
+        <section id="home">
+            <div class="section-content">
+                <div class="hero-subtitle">FINANCIAL ANALYST & DATA STRATEGIST</div>
+                <h1 class="section-title">Hello, I'm<br><span>Aditya Singh</span></h1>
+                <p class="section-description">
+                    Transforming complex data into strategic insights. 
+                    Building the future of finance through neural analytics and high-fidelity intelligence.
+                </p>
+                <a href="#projects" class="btn-neon">Explore My Work &nearr;</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="section-content">
+                <div class="hero-subtitle">IDENTITY MATRIX</div>
+                <h2 class="section-title">Strategic <span>Insights</span></h2>
+                <div class="glass-card">
+                    <p class="section-description" style="margin-bottom: 20px; color: white;">
+                        MBA Candidate at <strong>IIM Shillong</strong> specialising in Finance & Analytics. 
+                        Led FP&A for a ₹5,000+ Cr portfolio at <strong>BHEL</strong> and <strong>NISM Certified Research Analyst</strong>.
+                    </p>
+                    <p class="section-description" style="font-size: 15px;">
+                        Focused on the intersection of quantitative modelling and strategic decision-making. 
+                        I specialize in deciphering market complexity into actionable growth vectors.
+                    </p>
+                    <div style="display: flex; gap: 20px; margin-top: 30px;">
+                        <a href="#" class="btn-neon" style="padding: 12px 25px; font-size: 11px;">Download Resume</a>
+                        <div class="system-msg" style="font-size: 10px; align-self: center;">ANALYZING PROFILE...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="section-content">
+                <div class="hero-subtitle">TECHNICAL MATRIX</div>
+                <h2 class="section-title">Analytical <span>Power</span></h2>
+                <div class="skills-container">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>FINANCIAL MODELLING</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 95%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>DATA ANALYSIS</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 92%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>VALUATION & LBO</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 88%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>SQL & PYTHON</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>POWER BI</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 90%;"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-content">
+                <div class="hero-subtitle">OPERATIONS GALLERY</div>
+                <h2 class="section-title">Deployed <span>Intelligence</span></h2>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="glass-card" style="padding: 30px;">
+                        <div class="hero-subtitle" style="font-size: 10px; margin-bottom: 10px;">PROJECT_01</div>
+                        <h4 class="role-title">Generative AI NLP Chatbots</h4>
+                        <p class="section-description" style="font-size: 14px; margin-bottom: 20px;">
+                            Built persona-driven lyrical chatbots via Hugging Face and Gemini API; achieved 40-60% higher engagement.
+                        </p>
+                        <a href="#" class="hero-subtitle" style="text-decoration: none; font-size: 10px;">VIEW CASE STUDY &rarr;</a>
+                    </div>
+                    <div class="glass-card" style="padding: 30px;">
+                        <div class="hero-subtitle" style="font-size: 10px; margin-bottom: 10px;">PROJECT_02</div>
+                        <h4 class="role-title">Business Analysis Dashboards</h4>
+                        <p class="section-description" style="font-size: 14px; margin-bottom: 20px;">
+                            Developed 5 Power BI dashboards diagnosing employee-cost imbalances, driving 15%+ margin improvement.
+                        </p>
+                        <a href="#" class="hero-subtitle" style="text-decoration: none; font-size: 10px;">VIEW CASE STUDY &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="section-content">
+                <div class="hero-subtitle">CAREER TIMELINE</div>
+                <h2 class="section-title">Strategic <span>Growth</span></h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="role-meta">2024 - PRESENT</div>
+                        <h4 class="role-title">MBA Candidate</h4>
+                        <div class="role-meta">IIM Shillong &middot; Finance & Analytics</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="role-meta">2020 - 2023</div>
+                        <h4 class="role-title">B.A. (Hons.) Economics</h4>
+                        <div class="role-meta">Hansraj College, University of Delhi</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-content">
+                <div class="hero-subtitle">SECURE_LINK</div>
+                <h2 class="section-title">Initiate <span>Contact</span></h2>
+                <div class="glass-card">
+                    <p class="section-description" style="color: white; margin-bottom: 30px;">
+                        Ready to deploy strategic data solutions. Let's build the future together.
+                    </p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px;">
+                        <div>
+                            <div class="hero-subtitle" style="font-size: 9px; margin-bottom: 5px;">EMAIL</div>
+                            <div style="font-size: 14px;">aditya.singh@iimshillong.ac.in</div>
+                        </div>
+                        <div>
+                            <div class="hero-subtitle" style="font-size: 9px; margin-bottom: 5px;">LOCATION</div>
+                            <div style="font-size: 14px;">Shillong, India</div>
+                        </div>
+                    </div>
+                    <button class="btn-neon" style="width: 100%;">Send Message</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

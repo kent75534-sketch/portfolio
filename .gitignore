@@ -1,0 +1,15 @@
+*.ps1
+*.txt
+extract.ps1
+fix_all_encoding.ps1
+fix_encoding.ps1
+humanoid_script.js
+index_fixed.html
+model_viewer.html
+process.ps1
+process_ascii.ps1
+test_encoding.ps1
+test_reversal.ps1
+.tempmediaStorage/
+node_modules/
+.DS_Store
