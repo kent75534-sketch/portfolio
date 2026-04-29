@@ -29,36 +29,36 @@ function initThree() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ReinhardToneMapping;
-    renderer.toneMappingExposure = 2.0;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
     document.getElementById('webgl-container').appendChild(renderer.domElement);
 
-    // --- Cinematic Biotech Lighting ---
-    const ambientLight = new THREE.AmbientLight(0x0a1f0a, 0.5);
+    // --- Cinematic Biotech Lighting (Enhanced for Realism) ---
+    const ambientLight = new THREE.AmbientLight(0x050807, 0.2);
     scene.add(ambientLight);
     
-    // Strong Green Top-Light (Lab Feel)
-    const topLight = new THREE.DirectionalLight(0x7CFF00, 6);
+    // Primary Green Top Light
+    const topLight = new THREE.SpotLight(0x7CFF00, 10, 50, Math.PI * 0.3, 0.5);
     topLight.position.set(0, 15, 5);
+    topLight.castShadow = true;
     scene.add(topLight);
     
-    // Cyan Rim Light
+    // Cyan Side/Rim Light
     const rimLight = new THREE.DirectionalLight(0x00FFB2, 4);
-    rimLight.position.set(-10, 2, -10);
+    rimLight.position.set(-10, 5, -5);
     scene.add(rimLight);
     
-    // Front Fill
-    const fillLight = new THREE.PointLight(0xffffff, 1, 10);
-    fillLight.position.set(0, 0, 5);
-    scene.add(fillLight);
+    // Subtle Warm Fill (for realism contrast)
+    const warmFill = new THREE.PointLight(0xFF6A3D, 2, 15);
+    warmFill.position.set(5, -2, 5);
+    scene.add(warmFill);
 
     // Pre-load all models
     const loader = new THREE.GLTFLoader();
     let loadedCount = 0;
-    const totalModels = new Set(Object.values(modelPaths)).size;
     const uniquePaths = [...new Set(Object.values(modelPaths))];
+    const totalModels = uniquePaths.length;
 
-    // Start boot sequence immediately to show progress
     runBootSequence();
 
     uniquePaths.forEach(path => {
@@ -73,14 +73,20 @@ function initThree() {
                 if (node.isMesh) {
                     node.castShadow = true;
                     node.receiveShadow = true;
+                    
+                    // Enhancement for "Natural" Look:
+                    // Keep original materials but enhance their physical properties
                     if (node.material) {
-                        node.material.roughness = 1.0;
-                        node.material.metalness = 0.0;
+                        node.material.envMapIntensity = 1.5;
+                        if (node.material.name.toLowerCase().includes('glow') || node.material.name.toLowerCase().includes('vein')) {
+                            node.material.emissive = new THREE.Color(0x7CFF00);
+                            node.material.emissiveIntensity = 2;
+                        }
                     }
                 }
             });
 
-            // Map the path back to the section keys
+            // Map keys
             for (const [key, p] of Object.entries(modelPaths)) {
                 if (p === path) {
                     models[key] = {
@@ -93,9 +99,10 @@ function initThree() {
 
             loadedCount++;
             window.modelProgress = (loadedCount / totalModels) * 100;
-        }, undefined, (error) => {
-            console.error('Error loading model:', error);
-            loadedCount++; // Count even on error to prevent hanging
+        }, undefined, (err) => {
+            console.error(err);
+            loadedCount++;
+            window.modelProgress = (loadedCount / totalModels) * 100;
         });
     });
 
@@ -109,26 +116,23 @@ function runBootSequence() {
 
     const interval = setInterval(() => {
         const actualProgress = window.modelProgress || 0;
-        
-        // Smoothly approach actual loading progress
         if (displayProgress < actualProgress) {
             displayProgress += 2;
         } else if (displayProgress < 99) {
-            displayProgress += 0.2; // Slow crawl while waiting
+            displayProgress += 0.1;
         }
 
         if (displayProgress >= 100 && actualProgress >= 100) {
             displayProgress = 100;
             clearInterval(interval);
-            initBtn.style.opacity = 1;
-            initBtn.style.pointerEvents = 'all';
+            gsap.to(initBtn, { opacity: 1, pointerEvents: 'all', duration: 0.5 });
         }
         
         if (bootBar) bootBar.style.width = displayProgress + '%';
     }, 50);
 
     initBtn.onclick = () => {
-        gsap.to('#boot-loader', { opacity: 0, duration: 1, onComplete: () => {
+        gsap.to('#boot-loader', { opacity: 0, duration: 0.8, onComplete: () => {
             document.getElementById('boot-loader').style.display = 'none';
             initGSAP();
             switchModel('home');
@@ -138,15 +142,15 @@ function runBootSequence() {
 }
 
 function welcomeVoice() {
-    const msg = new SpeechSynthesisUtterance("Welcome. System Initialized.");
-    msg.rate = 0.8;
-    msg.pitch = 0.6;
+    const msg = new SpeechSynthesisUtterance("Neural link established. System online.");
+    msg.rate = 0.9;
+    msg.pitch = 0.7;
     window.speechSynthesis.speak(msg);
 }
 
 function switchModel(key) {
     if (currentModel) {
-        gsap.to(currentModel.scene.position, { x: 8, duration: 0.8, ease: 'power2.in', onComplete: () => {
+        gsap.to(currentModel.scene.position, { x: 8, duration: 0.6, ease: 'power2.in', onComplete: () => {
             currentModel.scene.visible = false;
             showNewModel(key);
         }});
@@ -161,7 +165,7 @@ function showNewModel(key) {
 
     currentModel.scene.visible = true;
     currentModel.scene.position.x = 8;
-    gsap.to(currentModel.scene.position, { x: 3, duration: 1.5, ease: 'expo.out' });
+    gsap.to(currentModel.scene.position, { x: 3, duration: 1.2, ease: 'power3.out' });
 
     if (currentModel.animations && currentModel.animations.length > 0) {
         mixer = new THREE.AnimationMixer(currentModel.scene);
@@ -172,6 +176,9 @@ function showNewModel(key) {
 
 function initGSAP() {
     gsap.registerPlugin(ScrollTrigger);
+
+    // Immediate visibility fix
+    gsap.set('section .section-content > *', { opacity: 1, y: 0 });
 
     const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
     
@@ -188,19 +195,19 @@ function initGSAP() {
                 updateNav(section);
             }
         });
-    });
 
-    sections.forEach(section => {
+        // Refined animation to prevent "Empty Section" look
         gsap.from(`#${section} .section-content > *`, {
             scrollTrigger: {
                 trigger: `#${section}`,
-                start: 'top 80%'
+                start: 'top 85%',
+                toggleActions: 'play none none none'
             },
-            y: 50,
+            y: 30,
             opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: 'power3.out'
+            duration: 0.8,
+            stagger: 0.1,
+            clearProps: 'all' // Ensure it doesn't get stuck at opacity 0
         });
     });
 }
@@ -220,25 +227,24 @@ function animate() {
     if (mixer) mixer.update(delta);
 
     if (currentModel) {
-        currentModel.scene.position.y = -2 + Math.sin(time * 0.5) * 0.15;
-        currentModel.scene.rotation.y = Math.PI * 0.2 + mx * 0.4;
-        currentModel.scene.rotation.x = -0.2 + my * 0.15;
+        currentModel.scene.position.y = -2 + Math.sin(time * 0.4) * 0.12;
+        currentModel.scene.rotation.y = Math.PI * 0.2 + mx * 0.3;
+        currentModel.scene.rotation.x = -0.15 + my * 0.1;
     }
 
     renderer.render(scene, camera);
 }
 
-// --- Particles.js Config ---
 if (typeof particlesJS !== 'undefined') {
     particlesJS('particles-js', {
         particles: {
-            number: { value: 60, density: { enable: true, value_area: 800 } },
+            number: { value: 40, density: { enable: true, value_area: 800 } },
             color: { value: '#7CFF00' },
             shape: { type: 'circle' },
-            opacity: { value: 0.3, random: true },
-            size: { value: 2, random: true },
+            opacity: { value: 0.2, random: true },
+            size: { value: 1.5, random: true },
             line_linked: { enable: false },
-            move: { enable: true, speed: 0.8, direction: 'none', random: true, out_mode: 'out' }
+            move: { enable: true, speed: 0.5, direction: 'none', random: true, out_mode: 'out' }
         }
     });
 }
