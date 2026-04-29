@@ -58,6 +58,11 @@ function initThree() {
     const totalModels = new Set(Object.values(modelPaths)).size;
     const uniquePaths = [...new Set(Object.values(modelPaths))];
 
+    // Start boot sequence immediately to show progress
+    runBootSequence();
+
+    uniquePaths.forEach(path => {
+        loader.load(path, (gltf) => {
             const m = gltf.scene;
             m.scale.set(4, 4, 4);
             m.position.set(3, -2, 0); 
@@ -87,9 +92,10 @@ function initThree() {
             }
 
             loadedCount++;
-            if (loadedCount === totalModels) {
-                runBootSequence();
-            }
+            window.modelProgress = (loadedCount / totalModels) * 100;
+        }, undefined, (error) => {
+            console.error('Error loading model:', error);
+            loadedCount++; // Count even on error to prevent hanging
         });
     });
 
@@ -99,17 +105,26 @@ function initThree() {
 function runBootSequence() {
     const bootBar = document.getElementById('boot-bar');
     const initBtn = document.getElementById('init-button');
-    let progress = 0;
+    let displayProgress = 0;
 
     const interval = setInterval(() => {
-        progress += Math.random() * 5;
-        if (progress >= 100) {
-            progress = 100;
+        const actualProgress = window.modelProgress || 0;
+        
+        // Smoothly approach actual loading progress
+        if (displayProgress < actualProgress) {
+            displayProgress += 2;
+        } else if (displayProgress < 99) {
+            displayProgress += 0.2; // Slow crawl while waiting
+        }
+
+        if (displayProgress >= 100 && actualProgress >= 100) {
+            displayProgress = 100;
             clearInterval(interval);
             initBtn.style.opacity = 1;
             initBtn.style.pointerEvents = 'all';
         }
-        bootBar.style.width = progress + '%';
+        
+        if (bootBar) bootBar.style.width = displayProgress + '%';
     }, 50);
 
     initBtn.onclick = () => {
@@ -125,13 +140,13 @@ function runBootSequence() {
 function welcomeVoice() {
     const msg = new SpeechSynthesisUtterance("Welcome. System Initialized.");
     msg.rate = 0.8;
-    msg.pitch = 0.6; // Deep Authoritative
+    msg.pitch = 0.6;
     window.speechSynthesis.speak(msg);
 }
 
 function switchModel(key) {
     if (currentModel) {
-        gsap.to(currentModel.scene.position, { x: 5, opacity: 0, duration: 0.8, ease: 'power2.in', onComplete: () => {
+        gsap.to(currentModel.scene.position, { x: 8, duration: 0.8, ease: 'power2.in', onComplete: () => {
             currentModel.scene.visible = false;
             showNewModel(key);
         }});
@@ -148,7 +163,6 @@ function showNewModel(key) {
     currentModel.scene.position.x = 8;
     gsap.to(currentModel.scene.position, { x: 3, duration: 1.5, ease: 'expo.out' });
 
-    // Handle animations
     if (currentModel.animations && currentModel.animations.length > 0) {
         mixer = new THREE.AnimationMixer(currentModel.scene);
         const action = mixer.clipAction(currentModel.animations[0]);
@@ -176,7 +190,6 @@ function initGSAP() {
         });
     });
 
-    // Animate section content on scroll
     sections.forEach(section => {
         gsap.from(`#${section} .section-content > *`, {
             scrollTrigger: {
@@ -207,10 +220,7 @@ function animate() {
     if (mixer) mixer.update(delta);
 
     if (currentModel) {
-        // Subtle Breathing & Hover
         currentModel.scene.position.y = -2 + Math.sin(time * 0.5) * 0.15;
-        
-        // Head Tracking (Subtle)
         currentModel.scene.rotation.y = Math.PI * 0.2 + mx * 0.4;
         currentModel.scene.rotation.x = -0.2 + my * 0.15;
     }
@@ -219,23 +229,19 @@ function animate() {
 }
 
 // --- Particles.js Config ---
-particlesJS('particles-js', {
-    particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
-        color: { value: '#7CFF00' },
-        shape: { type: 'circle' },
-        opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
-        size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
-        line_linked: { enable: false },
-        move: { enable: true, speed: 1, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false, attact: { enable: false, rotateX: 600, rotateY: 1200 } }
-    },
-    interactivity: {
-        detect_on: 'canvas',
-        events: { onhover: { enable: true, mode: 'bubble' }, onclick: { enable: true, mode: 'push' }, resize: true },
-        modes: { grab: { distance: 400, line_linked: { opacity: 1 } }, bubble: { distance: 200, size: 6, duration: 2, opacity: 8, speed: 3 }, repulse: { distance: 200, duration: 0.4 }, push: { particles_nb: 4 }, remove: { particles_nb: 2 } }
-    },
-    retina_detect: true
-});
+if (typeof particlesJS !== 'undefined') {
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 60, density: { enable: true, value_area: 800 } },
+            color: { value: '#7CFF00' },
+            shape: { type: 'circle' },
+            opacity: { value: 0.3, random: true },
+            size: { value: 2, random: true },
+            line_linked: { enable: false },
+            move: { enable: true, speed: 0.8, direction: 'none', random: true, out_mode: 'out' }
+        }
+    });
+}
 
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
