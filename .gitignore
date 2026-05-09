@@ -13,3 +13,5 @@ test_reversal.ps1
 .tempmediaStorage/
 node_modules/
 .DS_Store
+
+.vercel

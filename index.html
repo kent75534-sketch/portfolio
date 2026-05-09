@@ -1,208 +1,839 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aditya Singh &middot; Futuristic 3D Finance Portfolio</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Singh  Strategic Advisory & Financial Analysis</title>
+  <meta name="description" content="Institutional-grade financial analysis and strategic advisory by Aditya Singh, MBA Finance & Analytics, IIM Shillong." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div id="particles-js"></div>
 
-    <div class="boot-loader" id="boot-loader">
-        <div class="system-msg" id="boot-status">INITIALIZING BIOTECH INTERFACE...</div>
-        <div class="loading-bar">
-            <div class="loading-fill" id="boot-bar"></div>
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">ADITYA SINGH</a>
+      <ul class="nav-links">
+        <li><a href="#executive" class="nav-link" data-section="executive">Executive Summary</a></li>
+        <li><a href="#deals" class="nav-link" data-section="deals">Project Portfolio</a></li>
+        <li><a href="#expertise" class="nav-link" data-section="expertise">Expertise</a></li>
+        <li><a href="#narrative" class="nav-link" data-section="narrative">Narrative</a></li>
+        <li><a href="#contact" class="nav-link active" data-section="contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn-inquire">Inquire →</a>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#executive" class="mob-link">Executive Summary</a>
+    <a href="#deals" class="mob-link">Project Portfolio</a>
+    <a href="#expertise" class="mob-link">Expertise</a>
+    <a href="#narrative" class="mob-link">Narrative</a>
+    <a href="#contact" class="mob-link">Contact</a>
+  </div>
+
+  <!-- HERO / EXECUTIVE SUMMARY -->
+  <section id="executive" class="section hero-section">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <p class="hero-eyebrow">ADITYA SINGH</p>
+        <h1 class="hero-headline">Strategic<br>Advisory.<br><em>Precise<br>Execution.</em></h1>
+        <p class="hero-sub">MBA candidate at IIM Shillong, NISM Certified, and HSBC CIB Finalist  building a career at the intersection of rigorous financial analysis, data-driven strategy, and decisive execution.</p>
+        <div class="hero-actions">
+          <a href="#deals" class="btn-primary">View Project Portfolio</a>
+          <a href="#contact" class="btn-secondary">Contact Me</a>
         </div>
-        <button id="init-button" class="btn-neon" style="opacity: 0; pointer-events: none;">ENGAGE SYSTEM</button>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <div class="hero-photo-placeholder">
+            <img src="photo.jpg" alt="Aditya Singh" class="hero-photo-img" />
+          </div>
+          <div class="hero-photo-caption">MBA in Finance &amp; Analytics, IIM Shillong &nbsp;|&nbsp; NISM Certified Research Analyst &nbsp;|&nbsp; HSBC CIB League Campus Finalist</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="key-transactions-preview">
+      <h2 class="section-label">Key Projects</h2>
+      <p class="section-sub">Representative engagements highlighting financial analysis, market research, and data-driven strategy delivery.</p>
+      <div class="deal-cards-row" style="grid-template-columns: repeat(3,1fr);">
+        <div class="deal-card-mini">
+          <span class="deal-tag">FP&amp;A Advisory</span>
+          <div class="deal-icon">▦</div>
+          <h3 class="deal-name">BHEL</h3>
+          <p class="deal-desc">₹1,000+ Cr Capital Allocated</p>
+          <p class="deal-body">Led FP&amp;A for a ₹5,000+ Cr power sector portfolio, building 30+ financial models to optimise capital allocation and reduce overhead costs by 8%.</p>
+          <p class="deal-date">May–Jul 2025 · Closed</p>
+        </div>
+        <div class="deal-card-mini">
+          <span class="deal-tag">Startup Fundraising</span>
+          <div class="deal-icon">⬡</div>
+          <h3 class="deal-name">The Venture Guys</h3>
+          <p class="deal-desc">Capital Structuring</p>
+          <p class="deal-body">Advised and executed critical startup fundraising initiatives, structuring compelling narratives and financial models to secure early-stage capital.</p>
+          <p class="deal-date">Q1 2024 · Closed</p>
+        </div>
+        <div class="deal-card-mini">
+          <span class="deal-tag">Market Research</span>
+          <div class="deal-icon">�</div>
+          <h3 class="deal-name">Sort Surprises</h3>
+          <p class="deal-desc">₹20L+ Revenue Generated</p>
+          <p class="deal-body">Led market research and CRM-driven campaigns generating ₹20L+ in new revenue with a 20% boost in conversion rates.</p>
+          <p class="deal-date">Jul–Sep 2023 · Closed</p>
+        </div>
+      </div>
+      <div class="view-all-row">
+        <a href="#deals" class="link-arrow">View Full Portfolio →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEAL GALLERY -->
+  <section id="deals" class="section deals-section">
+    <div class="page-header">
+      <h1 class="page-title">Project Portfolio</h1>
+      <p class="page-sub">A curated selection of key financial analysis, market research, and technology engagements. Demonstrating a track record of rigorous analysis and decisive execution across institutional and startup environments.</p>
     </div>
 
-    <header>
-        <div class="logo">ADITYA <span>SINGH</span></div>
-        <nav class="nav-links">
-            <a href="#home" class="active">HOME</a>
-            <a href="#about">ABOUT</a>
-            <a href="#skills">SKILLS</a>
-            <a href="#projects">PROJECTS</a>
-            <a href="#contact">CONTACT</a>
-        </nav>
-    </header>
-
-    <div id="webgl-container"></div>
-
-    <!-- HUD Overlay (Global) -->
-    <div class="hud-panel">
-        <div class="hud-item">
-            <div class="hud-label">NEURAL_LOAD</div>
-            <div class="hud-value">92%</div>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Corporate Finance &amp; FP&amp;A</span>
         </div>
-        <div class="hud-item">
-            <div class="status-online">
-                <div class="status-dot"></div>
-                SYSTEM STATUS: ONLINE
-            </div>
-            <div class="hud-label" style="margin-top: 10px;">ANALYZING_DATA...</div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Finance Intern</span>
         </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">Heavy Manufacturing</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Quantitative Outcome</span>
+          <span class="meta-outcome">₹1,000+ Cr</span>
+          <span class="meta-outcome-sub">Capital Allocated</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">Project BHEL: Corporate Finance &amp; FP&amp;A</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Led FP&amp;A for a CAPEX/power portfolio valued at ₹5,000+ Cr, requiring rigorous financial oversight and strategic capital allocation to optimise returns.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Developed 30+ sophisticated financial models (including DCF and Monte Carlo simulations) and spearheaded comprehensive due diligence processes to evaluate project viability and risks.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Delivered ₹15 Cr in direct cost savings and achieved an 8% reduction in overhead costs. Recognised with the 'Best Intern' award for exceptional analytical rigour and impact.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <main>
-        <section id="home">
-            <div class="section-content">
-                <div class="hero-subtitle">FINANCIAL ANALYST & DATA STRATEGIST</div>
-                <h1 class="section-title">Hello, I'm<br><span>Aditya Singh</span></h1>
-                <p class="section-description">
-                    Transforming complex data into strategic insights. 
-                    Building the future of finance through neural analytics and high-fidelity intelligence.
-                </p>
-                <a href="#projects" class="btn-neon">Explore My Work &nearr;</a>
-            </div>
-        </section>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Startup Fundraising</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">IB Junior Analyst</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">Venture Capital / Tech</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Quantitative Outcome</span>
+          <span class="meta-outcome">200+</span>
+          <span class="meta-outcome-sub">Investors Screened</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">Project Venture Guys: Investment Banking</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Tasked with executing startup fundraising mandates in a highly competitive market, requiring precise investor targeting and compelling narrative construction.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Assisted in 10+ critical pitch calls alongside senior bankers. Conducted deep screening to identify optimal investor pools from a universe of 200–300 target companies and individuals per mandate.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Successfully prepared founders for high-stakes pitches by equipping them with data-driven value propositions and robust financial narratives, facilitating successful capital raises.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <section id="about">
-            <div class="section-content">
-                <div class="hero-subtitle">IDENTITY MATRIX</div>
-                <h2 class="section-title">Strategic <span>Insights</span></h2>
-                <div class="glass-card">
-                    <p class="section-description" style="margin-bottom: 20px; color: white;">
-                        MBA Candidate at <strong>IIM Shillong</strong> specialising in Finance & Analytics. 
-                        Led FP&A for a ₹5,000+ Cr portfolio at <strong>BHEL</strong> and <strong>NISM Certified Research Analyst</strong>.
-                    </p>
-                    <p class="section-description" style="font-size: 15px;">
-                        Focused on the intersection of quantitative modelling and strategic decision-making. 
-                        I specialize in deciphering market complexity into actionable growth vectors.
-                    </p>
-                    <div style="display: flex; gap: 20px; margin-top: 30px;">
-                        <a href="#" class="btn-neon" style="padding: 12px 25px; font-size: 11px;">Download Resume</a>
-                        <div class="system-msg" style="font-size: 10px; align-self: center;">ANALYZING PROFILE...</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Market Research</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Market Research Intern</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">E-commerce / Retail</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Quantitative Outcome</span>
+          <span class="meta-outcome">₹20L+</span>
+          <span class="meta-outcome-sub">Incremental Revenue</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">Project Sort Surprises: Market Research</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>The business was experiencing concerning revenue and conversion stagnation, necessitating a rapid shift in customer acquisition and retention strategies.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Implemented targeted, CRM-driven outreach campaigns. Leveraged behavioural analytics to segment the customer base and personalise marketing interventions.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Generated ₹20L+ in new revenue. Achieved a 20% absolute increase in conversion rates while simultaneously driving a 40% reduction in customer acquisition costs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <section id="skills">
-            <div class="section-content">
-                <div class="hero-subtitle">TECHNICAL MATRIX</div>
-                <h2 class="section-title">Analytical <span>Power</span></h2>
-                <div class="skills-container">
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>FINANCIAL MODELLING</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 95%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>DATA ANALYSIS</span>
-                            <span>92%</span>
-                        </div>
-                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 92%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>VALUATION & LBO</span>
-                            <span>88%</span>
-                        </div>
-                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 88%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>SQL & PYTHON</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 85%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-info">
-                            <span>POWER BI</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar-outer"><div class="skill-bar-inner" style="width: 90%;"></div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Equity Research &amp; Advisory</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Finance Intern</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">Financial Services</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Period</span>
+          <span class="meta-outcome" style="font-size:22px">Dec '23</span>
+          <span class="meta-outcome-sub"> Jan '24</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">MY FNO School: Equity Research &amp; Financial Planning</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Required to identify viable investment opportunities through rigorous equity research and market analysis for personalised client financial planning.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Conducted in-depth equity research and market analysis. Collaborated with financial planners to create tailored financial plans aligned with individual client goals.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Delivered actionable investment recommendations supporting informed client decision-making across diverse financial profiles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <section id="projects">
-            <div class="section-content">
-                <div class="hero-subtitle">OPERATIONS GALLERY</div>
-                <h2 class="section-title">Deployed <span>Intelligence</span></h2>
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    <div class="glass-card" style="padding: 30px;">
-                        <div class="hero-subtitle" style="font-size: 10px; margin-bottom: 10px;">PROJECT_01</div>
-                        <h4 class="role-title">Generative AI NLP Chatbots</h4>
-                        <p class="section-description" style="font-size: 14px; margin-bottom: 20px;">
-                            Built persona-driven lyrical chatbots via Hugging Face and Gemini API; achieved 40-60% higher engagement.
-                        </p>
-                        <a href="#" class="hero-subtitle" style="text-decoration: none; font-size: 10px;">VIEW CASE STUDY &rarr;</a>
-                    </div>
-                    <div class="glass-card" style="padding: 30px;">
-                        <div class="hero-subtitle" style="font-size: 10px; margin-bottom: 10px;">PROJECT_02</div>
-                        <h4 class="role-title">Business Analysis Dashboards</h4>
-                        <p class="section-description" style="font-size: 14px; margin-bottom: 20px;">
-                            Developed 5 Power BI dashboards diagnosing employee-cost imbalances, driving 15%+ margin improvement.
-                        </p>
-                        <a href="#" class="hero-subtitle" style="text-decoration: none; font-size: 10px;">VIEW CASE STUDY &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Generative AI Development</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">AI / Data Analyst</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">FinTech / AI</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Period</span>
+          <span class="meta-outcome" style="font-size:22px">Jul '25</span>
+          <span class="meta-outcome-sub"> Aug '25</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">Fincrux Technologies: Generative AI Chatbot</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Fincrux required an intelligent automated servicing solution to reduce manual response load and improve client query resolution speed at scale.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Built a Generative AI chatbot leveraging NLP pipelines and Hugging Face transformer models, integrating it with the client-facing servicing interface.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Delivered 3–5 production NLP chatbots achieving 40–60% higher user engagement. Custom typing-animation UI improved session depth and enabled scalable, persona-driven client interactions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <section id="experience">
-            <div class="section-content">
-                <div class="hero-subtitle">CAREER TIMELINE</div>
-                <h2 class="section-title">Strategic <span>Growth</span></h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="role-meta">2024 - PRESENT</div>
-                        <h4 class="role-title">MBA Candidate</h4>
-                        <div class="role-meta">IIM Shillong &middot; Finance & Analytics</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="role-meta">2020 - 2023</div>
-                        <h4 class="role-title">B.A. (Hons.) Economics</h4>
-                        <div class="role-meta">Hansraj College, University of Delhi</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Business Analytics</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Data Analyst</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">FinTech / Analytics</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Period</span>
+          <span class="meta-outcome" style="font-size:22px">Feb '25</span>
+          <span class="meta-outcome-sub"> Apr '25</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">Fincrux Technologies: Power BI Business Dashboard</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Business units lacked consolidated KPI visibility, making it difficult to track operational performance and identify inefficiencies in real time.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Developed interactive Power BI dashboards using the MECE framework to structure KPIs, with DAX-driven calculations and dynamic filtering for cross-functional reporting.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Diagnosed a critical 62% employee-cost vs. &lt;21% customer-base imbalance using the MECE framework. Recommended targeted acquisitions projected to drive 15%+ margin improvement across business units.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <section id="contact">
-            <div class="section-content">
-                <div class="hero-subtitle">SECURE_LINK</div>
-                <h2 class="section-title">Initiate <span>Contact</span></h2>
-                <div class="glass-card">
-                    <p class="section-description" style="color: white; margin-bottom: 30px;">
-                        Ready to deploy strategic data solutions. Let's build the future together.
-                    </p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px;">
-                        <div>
-                            <div class="hero-subtitle" style="font-size: 9px; margin-bottom: 5px;">EMAIL</div>
-                            <div style="font-size: 14px;">aditya.singh@iimshillong.ac.in</div>
-                        </div>
-                        <div>
-                            <div class="hero-subtitle" style="font-size: 9px; margin-bottom: 5px;">LOCATION</div>
-                            <div style="font-size: 14px;">Shillong, India</div>
-                        </div>
-                    </div>
-                    <button class="btn-neon" style="width: 100%;">Send Message</button>
-                </div>
-            </div>
-        </section>
-    </main>
+    <div class="deal-detail-card">
+      <div class="deal-meta-col">
+        <div class="meta-group">
+          <span class="meta-label">Transaction Type</span>
+          <span class="meta-value">Equity Research</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Independent Researcher</span>
+        </div>
+        <div class="meta-group">
+          <span class="meta-label">Sector</span>
+          <span class="meta-value">Indian IT / Capital Markets</span>
+        </div>
+        <div class="meta-group outcome">
+          <span class="meta-label">Quantitative Outcome</span>
+          <span class="meta-outcome">701%</span>
+          <span class="meta-outcome-sub">Mphasis Return vs Benchmark</span>
+        </div>
+      </div>
+      <div class="deal-content-col">
+        <h2 class="deal-title">CAPM Research: Indian IT Nifty Index</h2>
+        <div class="sar-grid">
+          <div class="sar-block">
+            <span class="sar-label">★ Situation</span>
+            <p>Standard CAPM theory predicted expected returns across Indian IT sector stocks. The research question was whether the model's predictions held against actual 2022 market performance.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">⚡ Action</span>
+            <p>Conducted independent quantitative analysis of the full Indian IT Nifty Index, calculating expected vs. actual returns for each constituent stock using CAPM methodology and regression analysis.</p>
+          </div>
+          <div class="sar-block">
+            <span class="sar-label">↑ Result</span>
+            <p>Found that 90% of IT sector stocks exceeded CAPM-predicted returns in 2022. Identified Mphasis and Mindtree as significantly undervalued  delivering returns 701% and 268% above their expected benchmarks  revealing systemic model inaccuracies in the Indian IT market.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="main.js"></script>
+
+
+  <!-- EXPERTISE -->
+  <section id="expertise" class="section expertise-section">
+    <div class="page-header">
+      <h1 class="page-title">Technical Competency</h1>
+      <p class="page-sub">A rigorous overview of analytical capabilities across investment banking and management consulting disciplines. Mastery in complex financial modelling, valuation methodologies, and institutional-grade software tools, applied to drive strategic decision-making in high-stakes environments.</p>
+    </div>
+
+    <div class="competency-grid">
+      <div class="competency-card large">
+        <div class="comp-header">
+          <span class="comp-icon">▦</span>
+          <h3 class="comp-title">Financial Modeling</h3>
+        </div>
+        <p class="comp-desc">Expertise in constructing dynamic, robust financial models to evaluate complex transactions. Emphasis on scenario analysis, sensitivity testing, and pristine structural integrity to support multi-billion dollar strategic initiatives.</p>
+        <div class="comp-tags">
+          <span>Financial Modeling &amp; DCF</span>
+          <span>Valuation &amp; LBO</span>
+          <span>Monte Carlo</span>
+          <span>Variance Analysis</span>
+        </div>
+      </div>
+      <div class="competency-card">
+        <div class="comp-header">
+          <span class="comp-icon">�</span>
+          <h3 class="comp-title">Valuation</h3>
+        </div>
+        <ul class="comp-list">
+          <li><strong>Trading Comps</strong>  Relative valuation metrics (EV/EBITDA, P/E) across peer groups.</li>
+          <li><strong>Precedent Transactions</strong>  Analysis of control premiums in historical M&amp;A activity.</li>
+          <li><strong>Sum of the Parts (SOTP)</strong>  Segment-level valuation for conglomerates and spin-offs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tools-section">
+      <h2 class="sub-section-title">Institutional Tool Proficiency</h2>
+      <div class="tools-table">
+        <div class="tools-table-header">
+          <span>Platform</span>
+          <span>Core Application</span>
+          <span>Proficiency Level</span>
+        </div>
+        <div class="tools-row">
+          <span class="tool-name">Financial Databases</span>
+          <span class="tool-desc">Equity screening, market mapping, and PE/VC profiling using publicly available databases and research platforms for deal sourcing and investment analysis.</span>
+          <span class="tool-level advanced">Proficient</span>
+        </div>
+        <div class="tools-row">
+          <span class="tool-name">Power BI (DAX/SQL)</span>
+          <span class="tool-desc">Data visualisation, interactive dashboard creation, and complex relational data modelling.</span>
+          <span class="tool-level expert">Expert</span>
+        </div>
+        <div class="tools-row">
+          <span class="tool-name">RStudio / Python</span>
+          <span class="tool-desc">Statistical analysis, machine learning implementations, and automated data processing pipelines.</span>
+          <span class="tool-level advanced">Advanced</span>
+        </div>
+        <div class="tools-row">
+          <span class="tool-name">MS Excel (Advanced)</span>
+          <span class="tool-desc">Creation of dynamic index/match arrays, complex nested logic, data table sensitivity analysis, and macro automation for reporting.</span>
+          <span class="tool-level master">Master</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-cert-grid">
+      <div class="proj-block">
+        <h2 class="sub-section-title">Projects</h2>
+        <div class="proj-item">
+          <span class="proj-name">Generative AI Chatbots</span>
+          <span class="proj-desc">NLP / Hugging Face integration for automated client servicing.</span>
+        </div>
+        <div class="proj-item">
+          <span class="proj-name">Business Analysis Dashboards</span>
+          <span class="proj-desc">Applied MECE framework for operational KPI tracking.</span>
+        </div>
+      </div>
+      <div class="cert-block">
+        <h2 class="sub-section-title">Certifications</h2>
+        <div class="cert-item">
+          <span class="cert-name">NISM Research Analyst</span>
+          <span class="cert-score">91.5%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">365 Careers IB Course</span>
+          <span class="cert-badge">Completed</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UC Davis SQL for Data Science</span>
+          <span class="cert-score">98.26%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">IBM Python</span>
+          <span class="cert-badge">Completed</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">Johns Hopkins Business Analytics with Excel</span>
+          <span class="cert-score">96.95%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UPenn Introduction to Corporate Finance</span>
+          <span class="cert-score">92.50%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UPenn Fundamentals of Quantitative Modeling</span>
+          <span class="cert-score">87.50%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UPenn Introduction to Spreadsheets and Models</span>
+          <span class="cert-score">75%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UVA Financial Accounting Fundamentals</span>
+          <span class="cert-score">86.66%</span>
+        </div>
+        <div class="cert-item">
+          <span class="cert-name">UPenn Financial Acumen for Non-Financial Managers</span>
+          <span class="cert-score">83.86%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NARRATIVE -->
+  <section id="narrative" class="section narrative-section">
+    <div class="narrative-hero">
+      <div class="narrative-hero-text">
+        <h1 class="page-title">Professional Narrative</h1>
+        <p class="page-sub">From a government school in Delhi to IIM Shillong  built on economics, tested in real markets, and driven by an uncompromising belief that rigorous analysis is the only honest foundation for advice.</p>
+      </div>
+      <div class="narrative-hero-img">
+        <img src="narrative-photo.jpg" alt="Aditya Singh" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:4px;" />
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-label">LEADERSHIP PHILOSOPHY</p>
+      <blockquote class="quote-text">"The most dangerous advice in finance comes from people who confuse confidence with competence. I would rather show you the model than sell you the conclusion."</blockquote>
+    </div>
+
+    <div class="origin-section" style="margin-bottom:64px;">
+      <h2 class="sub-section-title">The Beginning</h2>
+      <p class="timeline-desc" style="max-width:720px;line-height:1.85;font-size:16px;">
+        I did not come from finance. I came from economics  the kind you study because you genuinely want to understand how the world works, not just how markets move. Growing up in Delhi, attending a government school, then earning my place at Hansraj College as Economics Subject Topper  none of it was handed to me. That foundation built something no MBA course can: the habit of intellectual rigour.<br><br>
+        My first real exposure to markets was not an internship. It was a CAPM research project where I found that 90% of Indian IT sector stocks were systematically beating their expected returns  and that Mphasis and Mindtree were undervalued by 701% and 268% against benchmarks. That project told me two things: markets misprice constantly, and data almost always reveals what consensus misses. I have been chasing that edge ever since.
+      </p>
+    </div>
+
+    <div class="trajectory-section">
+      <h2 class="sub-section-title">Professional Trajectory</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span class="timeline-date">2024  2025</span>
+          <div class="timeline-content">
+            <h3 class="timeline-role">MBA &amp; Summer Intern</h3>
+            <p class="timeline-org">IIM Shillong &amp; BHEL</p>
+            <p class="timeline-desc">Pursuing MBA in Finance &amp; Analytics at IIM Shillong. Engaged as a Summer Intern at Bharat Heavy Electricals Limited (BHEL), focusing on financial analysis, project evaluation, and operational efficiency metrics.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">2024</span>
+          <div class="timeline-content">
+            <h3 class="timeline-role">IB Junior Analyst</h3>
+            <p class="timeline-org">The Venture Guys</p>
+            <p class="timeline-desc">Conducted comprehensive financial modelling, valuation analysis, and industry research to support investment banking mandates. Assisted in pitch book preparation and due diligence processes for early-stage ventures and mid-market deals.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">Jul '23  Sep '23</span>
+          <div class="timeline-content">
+            <h3 class="timeline-role">Market Research Intern</h3>
+            <p class="timeline-org">Sort Surprises</p>
+            <p class="timeline-desc">Boosted INR 20L+ revenue via targeted customer acquisition with a <strong>20% increase</strong> in conversion rate. Ideated a blog garnering <strong>16K+ views</strong>, grew 20%+ organic monthly traffic, and achieved a 15% reduction in churn rate. Reduced survey costs by <strong>40%</strong> via digital transformation and automation, onboarding <strong>120+ clients</strong>.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="timeline-date">Dec '23  Jan '24</span>
+          <div class="timeline-content">
+            <h3 class="timeline-role">Finance Intern</h3>
+            <p class="timeline-org">MY FNO School</p>
+            <p class="timeline-desc">Conducted in-depth <strong>equity research and market analysis</strong> to identify investment opportunities. Collaborated with financial planners to create <strong>personalised financial plans</strong> aligning client goals and delivered tailored, actionable <strong>investment recommendations</strong> for informed decision-making.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-section">
+      <h2 class="sub-section-title">Academic Projects</h2>
+      <div class="projects-list">
+        <div class="project-entry">
+          <div class="project-meta">
+            <span class="project-course">Financial Economics</span>
+            <span class="project-inst">Hansraj College, DU</span>
+            <span class="project-date">Nov '22</span>
+          </div>
+          <div class="project-body">
+            <h4 class="project-title">The Application of Capital Asset Pricing Model in Indian IT Nifty Index</h4>
+            <p class="timeline-desc">Analysed CAPM deviations, finding that <strong>90% of IT sector stocks</strong> exceeded expected returns in 2022. Revealed the undervaluation of Mphasis &amp; Mindtree, with returns <strong>701% and 268%</strong> higher than expected, and uncovered systemic CAPM inaccuracies showing most IT stocks delivered <strong>higher returns than projected</strong>.</p>
+          </div>
+        </div>
+        <div class="project-entry">
+          <div class="project-meta">
+            <span class="project-course">Research Methodology</span>
+            <span class="project-inst">Hansraj College, DU</span>
+            <span class="project-date">Feb '22  Apr '22</span>
+          </div>
+          <div class="project-body">
+            <h4 class="project-title">Impact of Decarbonization on the U.S Economy</h4>
+            <p class="timeline-desc">Analysed the US economy over <strong>16 years</strong> of EV data, presenting a deep dive into the <strong>$28.24 bn</strong> industry. Visualised trends across EVs, alternative fuels in airlines, and macroeconomic effects. The resulting model explains US GDP per capita with exceptional precision  <strong>R²: 0.99, F-stat: 385.43</strong>.</p>
+          </div>
+        </div>
+        <div class="project-entry">
+          <div class="project-meta">
+            <span class="project-course">Data Analysis</span>
+            <span class="project-inst">Hansraj College, DU</span>
+            <span class="project-date">Nov '21</span>
+          </div>
+          <div class="project-body">
+            <h4 class="project-title">Agricultural Production Foundation of Indian Economy</h4>
+            <p class="timeline-desc">Analyzed Indian foodgrain production over <strong>2 decades</strong>, drawing insights across the agricultural sector through surveys, interviews, and online databases. Determined that the Green Revolution fueled a <strong>100% rise</strong> in agricultural output, reaching <strong>1,160 lakh tons</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="leadership-section">
+      <h2 class="sub-section-title">Leadership &amp; Responsibility</h2>
+      <div class="leadership-grid">
+        <div class="leadership-card">
+          <div class="lead-header">
+            <div>
+              <h4 class="lead-role">Event Management Member</h4>
+              <p class="lead-org">Hansraj Economics Society, Hansraj College</p>
+            </div>
+            <span class="lead-date">Nov '20  Nov '21</span>
+          </div>
+          <p class="timeline-desc">Spearheaded a team of <strong>20+</strong> to streamline a speaker summit, attracting <strong>3K+ global delegates</strong>. Managed a footfall of <strong>2K+</strong> at the school's annual event with 10+ volunteers. Ideated and organised <strong>INCEPTUM'21</strong>  a 4-event series worth INR 1L+ in rewards with 1K+ footfalls.</p>
+        </div>
+        <div class="leadership-card">
+          <div class="lead-header">
+            <div>
+              <h4 class="lead-role">Organising &amp; Sponsorship Member</h4>
+              <p class="lead-org">Women Development Cell, Hansraj College</p>
+            </div>
+            <span class="lead-date">Nov '20  Nov '21</span>
+          </div>
+          <p class="timeline-desc">Organised <strong>10+ webinars</strong> on women's issues with notable speakers, reaching <strong>200+ attendees</strong>. Supported <strong>10+ WDC events</strong> through joint organising and sponsorship efforts. Led the <strong>Red Spot Campaign</strong> to raise awareness on menstrual health and combat associated stigma.</p>
+        </div>
+        <div class="leadership-card">
+          <div class="lead-header">
+            <div>
+              <h4 class="lead-role">Office Bearer</h4>
+              <p class="lead-org">Ekonniti  Economics &amp; Public Policy Club, IIM Shillong</p>
+            </div>
+            <span class="lead-date">Oct '24  Apr '26</span>
+          </div>
+          <p class="timeline-desc">Coordinated <strong>Policy Crucible</strong> with 300+ participants and the <strong>North-East Economic Conclave</strong>, forging institutional partnerships with Bandhan Bank, CCI, IICA, and former bureaucrats for 6 expert sessions. Spearheaded <strong>Anveshan 2024</strong>  IIM Shillong's inaugural MUN  attracting <strong>110+ delegates</strong>, securing <strong>₹1L in sponsorships</strong>, and earning coverage from <strong>6+ state and national newspapers</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="extra-achievements-section">
+      <h2 class="sub-section-title">Academic &amp; Extra-Curricular Achievements</h2>
+      <div class="achieve-grid">
+        <div class="achieve-block">
+          <span class="achieve-label">Academic</span>
+          <p class="timeline-desc">Scored a <strong>10 GPA</strong> in 8 subjects including Statistical Methods for Economics (2022). Secured a <strong>Top 5 Rank</strong> in Class 12th and was recognised as Subject Topper in Economics (2020). Achieved <strong>Top 10 sectional ranks</strong> in Class 10th and 11th, demonstrating consistent academic excellence (2018).</p>
+        </div>
+        <div class="achieve-block">
+          <span class="achieve-label">Extra-Curricular</span>
+          <p class="timeline-desc">Served as <strong>Subject Matter Expert  Economics</strong> at Chegg Pvt. Ltd., providing high-quality academic solutions (2021). Aced the <strong>CUET PG Economics exam with 225 marks</strong>, a score competitive for JNU's Economics M.A. programme with a cut-off of 70.33 (2023).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="education-section">
+      <h2 class="sub-section-title">Academic Pedigree &amp; Honours</h2>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <span class="edu-type">Postgraduate</span>
+          <h3 class="edu-inst">IIM Shillong</h3>
+          <p class="edu-prog">MBA Finance &amp; Analytics</p>
+          <p class="edu-score">⊕ CGPA 2.89/4.33</p>
+        </div>
+        <div class="edu-card">
+          <span class="edu-type">Undergraduate</span>
+          <h3 class="edu-inst">Hansraj College, DU</h3>
+          <p class="edu-prog">B.A. Hons Economics</p>
+          <p class="edu-score">⊕ 78.38%</p>
+        </div>
+        <div class="edu-card">
+          <span class="edu-type">Leadership</span>
+          <h3 class="edu-inst">Ekoniti</h3>
+          <p class="edu-prog">Active leadership coordinating significant events at IIM Shillong.</p>
+          <p class="edu-score">Coordinated Conclaves &amp; Multi-Organiser</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section contact-section">
+    <div class="contact-grid">
+      <div class="contact-form-col">
+        <h1 class="page-title">Direct Inquiry</h1>
+        <p class="page-sub">For institutional advisory, executive search engagements, or strategic consulting inquiries. Please complete the requisite fields below or utilise the provided resources to review our firm's credentials.</p>
+        <form class="inquiry-form" id="inquiryForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" id="firstName" placeholder="Enter first name" />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" id="lastName" placeholder="Enter last name" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="organisation">Organisation</label>
+            <input type="text" id="organisation" placeholder="Corporate entity or firm" />
+          </div>
+          <div class="form-group">
+            <label for="email">Corporate Email</label>
+            <input type="email" id="email" placeholder="Email address" />
+          </div>
+          <div class="form-group">
+            <label for="inquiryType">Inquiry Type</label>
+            <select id="inquiryType">
+              <option>Job Opportunity / Recruitment</option>
+              <option>Investment Banking</option>
+              <option>Strategic Advisory</option>
+              <option>Financial Modeling</option>
+              <option>Market Research</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" placeholder="Detail your inquiry..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary form-submit">Submit Inquiry →</button>
+        </form>
+      </div>
+
+      <div class="contact-info-col">
+        <div class="info-card">
+          <h3 class="info-card-title">Contact Details</h3>
+          <div class="info-divider"></div>
+          <div class="info-item">
+            <span class="info-label">Direct Line</span>
+            <span class="info-value">+91 9625215353</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Email</span>
+            <span class="info-value">adityasingh.pgp24@iimshillong.ac.in</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Location</span>
+            <span class="info-value">New Delhi, India</span>
+          </div>
+        </div>
+
+        <div class="resources-block">
+          <h3 class="resources-title">Resources</h3>
+          <a href="resume.pdf" download="Aditya_Singh_Resume.pdf" class="resource-item">
+            <span class="res-icon">📄</span>
+            <div>
+              <span class="res-name">Executive Resume</span>
+              <span class="res-type">PDF Document</span>
+            </div>
+            <span class="res-download">↓</span>
+          </a>
+          <a href="Aditya_Project_Portfolio_Premium.pdf" download="Aditya_Project_Portfolio_Premium.pdf" class="resource-item">
+            <span class="res-icon">📊</span>
+            <div>
+              <span class="res-name">Project Portfolio Premium</span>
+              <span class="res-type">PDF Document</span>
+            </div>
+            <span class="res-download">↓</span>
+          </a>
+        </div>
+
+        <div class="achievements-block">
+          <h3 class="resources-title">Achievements</h3>
+          <div class="achievement-item">
+            <span class="ach-icon">🏆</span>
+            <div>
+              <span class="ach-name">HSBC CIB League</span>
+              <span class="ach-sub">Campus Finalist</span>
+            </div>
+          </div>
+          <div class="achievement-item">
+            <span class="ach-icon">📊</span>
+            <div>
+              <span class="ach-name">NISM Research Analyst</span>
+              <span class="ach-sub">Certified · 91.5% Score</span>
+            </div>
+          </div>
+          <div class="achievement-item">
+            <span class="ach-icon">🎓</span>
+            <div>
+              <span class="ach-name">Best Intern  BHEL</span>
+              <span class="ach-sub">Among 20+ Summer Interns · 2025</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="music-block">
+          <h3 class="resources-title">Music</h3>
+          <div class="music-album-card">
+            <img src="album-sun-sets.png" alt="My Sun Sets in the East" class="album-cover" />
+            <div class="album-info">
+              <span class="album-title">My Sun Sets in the East</span>
+              <span class="album-artist">Aditya Singh</span>
+              <div class="album-links">
+                <a href="https://music.apple.com/nz/album/my-sun-sets-in-the-east/1792241841" target="_blank" class="stream-btn apple">🍎 Apple Music</a>
+                <a href="https://open.spotify.com/album/6yb5lRNhB8S2qtfb02JHCP" target="_blank" class="stream-btn spotify">🎵 Spotify</a>
+              </div>
+            </div>
+          </div>
+          <div class="music-album-card">
+            <img src="album-reflections.png" alt="Reflections" class="album-cover" />
+            <div class="album-info">
+              <span class="album-title">Reflections</span>
+              <span class="album-artist">Aditya Singh</span>
+              <div class="album-links">
+                <a href="https://open.spotify.com/album/6jb3kDNXzI0eZO3hPGbQY5" target="_blank" class="stream-btn spotify">🎵 Spotify</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="https://linkedin.com/in/aditya-singh-214973270" target="_blank" class="linkedin-block">
+          <span class="li-icon">in</span>
+          <span class="li-text">linkedin.com/in/aditya-singh-214973270</span>
+          <span class="li-arrow">�</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">ADITYA<br>SINGH</div>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/aditya-singh-214973270" target="_blank">LinkedIn</a>
+        <a href="resume.pdf" download="Aditya_Singh_Resume.pdf">Executive Resume</a>
+        <a href="#deals">Project Portfolio</a>
+        <a href="#">Privacy Policy</a>
+      </div>
+      <p class="footer-copy">© 2025–2026 Aditya Singh. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
