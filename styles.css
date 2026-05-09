@@ -1,4 +1,4 @@
-﻿/* ── RESET & BASE ── */
+/* ── RESET & BASE ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -442,7 +442,7 @@ img { display: block; max-width: 100%; }
 /* ── NARRATIVE ── */
 .narrative-hero {
   display: grid; grid-template-columns: 1fr 360px;
-  gap: 64px; align-items: start;
+  gap: 64px; align-items: stretch;
   margin-bottom: 80px;
 }
 
